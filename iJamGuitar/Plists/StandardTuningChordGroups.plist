@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Key of G</key>
+	<string>G-C-D-Bm-Em-G7-C7-D7-Am-Em7</string>
+	<key>Key of D</key>
+	<string>D-G-A-Bm-Em-D7-G7-A7-Gm-F#</string>
+	<key>Key of C</key>
+	<string>C-C7-F-Fm-G-G7-Am-D7-Em-Em7</string>
+	<key>Love Me Tender</key>
+	<string>D-E7-A7-F#7-Bm-D7-G-Gm-B7-F#</string>
+	<key>House of the Rising Sun</key>
+	<string>Am-C-D-F-E-E7-F7-Dm</string>
+	<key>Unchained Melody</key>
+	<string>G-Em-C-D-Bm-G7-A#</string>
+	<key>Wayfairiing Stranger</key>
+	<string>Am-Dm-E-F-C-E7</string>
+</dict>
+</plist>

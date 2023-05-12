@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>A</key>
+	<string>x02220</string>
+	<key>Am</key>
+	<string>x02210</string>
+	<key>B</key>
+	<string>x24442</string>
+	<key>Bm</key>
+	<string>024432</string>
+	<key>C</key>
+	<string>x32010</string>
+	<key>D</key>
+	<string>000232</string>
+	<key>D*</key>
+	<string>057775</string>
+	<key>D**</key>
+	<string>000775</string>
+	<key>D***</key>
+	<string>000787</string>
+	<key>D5</key>
+	<string>000675</string>
+	<key>Dm</key>
+	<string>000231</string>
+	<key>E</key>
+	<string>2x2100</string>
+	<key>Em</key>
+	<string>222000</string>
+	<key>Edim</key>
+	<string>xx7353</string>
+	<key>F</key>
+	<string>303211</string>
+	<key>F#</key>
+	<string>4x4322</string>
+	<key>G</key>
+	<string>550403</string>
+	<key>Gm</key>
+	<string>510333</string>
+	<key>G+4</key>
+	<string>504030</string>
+	<key>NoChord</key>
+	<string>xxxxxx</string>
+</dict>
+</plist>
