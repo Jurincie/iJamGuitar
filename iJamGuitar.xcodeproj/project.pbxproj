@@ -39,9 +39,9 @@
 		7AA07A902A0417E800AE87B3 /* CapoPositionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A822A0417E800AE87B3 /* CapoPositionPickerView.swift */; };
 		7AA07A912A0417E800AE87B3 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A832A0417E800AE87B3 /* TopView.swift */; };
 		7AA07A922A0417E800AE87B3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A842A0417E800AE87B3 /* ContentView.swift */; };
-		7AA07A952A044C4600AE87B3 /* iJamViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A942A044C4600AE87B3 /* iJamViewModelTests.swift */; };
 		7AA07A972A044C6B00AE87B3 /* iJamGuitarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A452A040F6B00AE87B3 /* iJamGuitarUITests.swift */; };
 		7AB446D22A0DC2C1005B8F88 /* iJamGuitarModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7AB446D02A0DC2C1005B8F88 /* iJamGuitarModel.xcdatamodeld */; };
+		7AB446D72A0DCDCA005B8F88 /* iJamGuitarUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB446D62A0DCDCA005B8F88 /* iJamGuitarUnitTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,8 +99,9 @@
 		7AA07A832A0417E800AE87B3 /* TopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopView.swift; path = iJamGuitar/Views/TopView.swift; sourceTree = SOURCE_ROOT; };
 		7AA07A842A0417E800AE87B3 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = iJamGuitar/Views/ContentView.swift; sourceTree = SOURCE_ROOT; };
 		7AA07A932A04193B00AE87B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		7AA07A942A044C4600AE87B3 /* iJamViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = iJamViewModelTests.swift; path = iJamGuitarTests/iJamViewModelTests.swift; sourceTree = SOURCE_ROOT; };
 		7AB446D12A0DC2C1005B8F88 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		7AB446D52A0DCDC9005B8F88 /* iJamGuitarTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iJamGuitarTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		7AB446D62A0DCDCA005B8F88 /* iJamGuitarUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iJamGuitarUnitTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,7 +176,8 @@
 		7AA07A3A2A040F6B00AE87B3 /* iJamGuitarTests */ = {
 			isa = PBXGroup;
 			children = (
-				7AA07A942A044C4600AE87B3 /* iJamViewModelTests.swift */,
+				7AB446D62A0DCDCA005B8F88 /* iJamGuitarUnitTests.swift */,
+				7AB446D52A0DCDC9005B8F88 /* iJamGuitarTests-Bridging-Header.h */,
 			);
 			path = iJamGuitarTests;
 			sourceTree = "<group>";
@@ -309,6 +311,7 @@
 					};
 					7AA07A362A040F6B00AE87B3 = {
 						CreatedOnToolsVersion = 14.2;
+						LastSwiftMigration = 1420;
 						TestTargetID = 7AA07A212A040F6A00AE87B3;
 					};
 					7AA07A402A040F6B00AE87B3 = {
@@ -405,6 +408,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7AB446D72A0DCDCA005B8F88 /* iJamGuitarUnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,7 +416,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7AA07A952A044C4600AE87B3 /* iJamViewModelTests.swift in Sources */,
 				7AA07A972A044C6B00AE87B3 /* iJamGuitarUITests.swift in Sources */,
 				7AA07A482A040F6B00AE87B3 /* iJamGuitarUITestsLaunchTests.swift in Sources */,
 			);
@@ -611,15 +614,23 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J5T6Z5N38H;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.PixleyConsulting.iJamGuitarTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "iJamGuitarTests/iJamGuitarTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iJamGuitar.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/iJamGuitar";
@@ -631,15 +642,22 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J5T6Z5N38H;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.PixleyConsulting.iJamGuitarTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "iJamGuitarTests/iJamGuitarTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iJamGuitar.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/iJamGuitar";

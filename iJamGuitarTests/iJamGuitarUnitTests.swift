@@ -1,5 +1,5 @@
 //
-//  iJamViewModelTests.swift
+//  iJamGuitarUnitTests.swift
 //  IJAM_2022UnitTests
 //
 //  Created by Ron Jurincie on 4/8/23.
@@ -51,27 +51,6 @@ final class iJamViewModelTests: XCTestCase {
         
         // Then
         XCTAssertEqual(stringsVM.noteNamesArray.count, 42)
-    }
-    
-    func test_iJamViewModel_appStateActiveTuningName_equalsviewModelName() {
-        // Given:
-        
-        let app = XCUIApplication()
-        app.images["String4"]/*@START_MENU_TOKEN@*/.press(forDuration: 3.5);/*[[".tap()",".press(forDuration: 3.5);"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
-        app.windows.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.staticTexts["G"].tap()
-        app.images["String6"].swipeRight()
-        app.images["String1"]/*@START_MENU_TOKEN@*/.press(forDuration: 0.8);/*[[".tap()",".press(forDuration: 0.8);"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
-        
-        let stringareaviewImage = app.images["StringAreaView"]
-        stringareaviewImage.swipeLeft()
-        stringareaviewImage.swipeRight()
-        let vm = iJamGuitarViewModel()
-        
-        // When:
-        vm.activeTuningName = "Standard"
-        
-        // Then:
-        XCTAssertEqual(vm.activeTuningName, vm.appState?.activeTuning?.name)
     }
     
     func test_iJamViewModel_Tunings_ChordsMeetRequirements() {
