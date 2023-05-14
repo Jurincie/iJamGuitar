@@ -82,7 +82,7 @@ struct ChordButtonsView: View {
                     Image(getPickImageName())
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 100.0)
+                        .frame(maxWidth: 100.0)
                         .padding(10)
                         .opacity(self.pick.title == kNoChordName ? 0.3 : 1.0)
                         .disabled(self.pick.title == kNoChordName)
