@@ -63,37 +63,49 @@ struct ChordButtonsView: View {
     }
     
     struct PickView: View {
+        @EnvironmentObject var vm: iJamGuitarViewModel
         @State private var isAnimated: Bool = false
         var pick: Pick
-        @EnvironmentObject var vm: iJamGuitarViewModel
         let noChordArray = [Int](repeating: -1, count: 10)
         let kNoChordName = "NoChord"
         
         var body: some View {
             ZStack() {
-                Button(action: {
-                    if vm.selectedIndex != pick.id {
-                        withAnimation(.default) {
-                            isAnimated.toggle()
-                        }
-                        setNewActiveChord()
-                    }
-                }){
-                    Image(getPickImageName())
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 100.0)
-                        .padding(10)
-                        .opacity(self.pick.title == kNoChordName ? 0.3 : 1.0)
-                        .disabled(self.pick.title == kNoChordName)
-                }
+                // background layer
+                getPickButton()
+                
+                // front layer
                 Text(self.pick.title == kNoChordName ? "" : self.pick.title)
                     .foregroundColor(Color.white)
                     .font(.custom("Arial Rounded MT Bold", size: getFontSize(targetString: self.pick.title)))
             }
             .cornerRadius(10.0)
-            .rotationEffect(Angle(degrees: isAnimated ? 360 : 0))
+            .rotationEffect(Angle(degrees: isAnimated ? 720 : 0))
             .shadow(color: Color.white, radius: 20.0)
+        }
+        
+        func getPickButton() -> some View {
+           return Button(action: {
+                if vm.selectedIndex != pick.id {
+                    withAnimation(.default) {
+                        isAnimated.toggle()
+                    }
+                    setNewActiveChord()
+                }
+            }){
+               getPickImage()
+            }
+            
+        }
+        
+        func getPickImage() -> some View {
+            return Image(getPickImageName())
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxWidth: 100.0)
+                .padding(10)
+                .opacity(self.pick.title == kNoChordName ? 0.3 : 1.0)
+                .disabled(self.pick.title == kNoChordName)
         }
         
         func getPickImageName() -> String {
