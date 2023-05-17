@@ -33,25 +33,26 @@ struct ChordButtonsView: View {
     let mySpacing:CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 36.0 : 12.0
     private let columns = Array(repeating: GridItem(.flexible()), count: 5)
     private var activeButtonId: Int = -1
-
-            
-    var body: some View {
+    
+    func getPicks() -> [Pick] {
         let chordNames:[String] = iJamGuitarVM.getAvailableChordNames(activeChordGroup: iJamGuitarVM.activeChordGroup)
         
-        let boxes = [Pick(id: 0, title: chordNames[0], image:Image("UndefinedPick")),
-                      Pick(id: 1, title: chordNames[1], image:Image("UndefinedPick")),
-                      Pick(id: 2, title: chordNames[2], image:Image("UndefinedPick")),
-                      Pick(id: 3, title: chordNames[3], image:Image("UndefinedPick")),
-                      Pick(id: 4, title: chordNames[4], image:Image("UndefinedPick")),
-                      Pick(id: 5, title: chordNames[5], image:Image("UndefinedPick")),
-                      Pick(id: 6, title: chordNames[6], image:Image("UndefinedPick")),
-                      Pick(id: 7, title: chordNames[7], image:Image("UndefinedPick")),
-                      Pick(id: 8, title: chordNames[8], image:Image("UndefinedPick")),
-                      Pick(id: 9, title: chordNames[9], image:Image("UndefinedPick"))]
-                
+        return [Pick(id: 0, title: chordNames[0], image:Image("UndefinedPick")),
+                Pick(id: 1, title: chordNames[1], image:Image("UndefinedPick")),
+                Pick(id: 2, title: chordNames[2], image:Image("UndefinedPick")),
+                Pick(id: 3, title: chordNames[3], image:Image("UndefinedPick")),
+                Pick(id: 4, title: chordNames[4], image:Image("UndefinedPick")),
+                Pick(id: 5, title: chordNames[5], image:Image("UndefinedPick")),
+                Pick(id: 6, title: chordNames[6], image:Image("UndefinedPick")),
+                Pick(id: 7, title: chordNames[7], image:Image("UndefinedPick")),
+                Pick(id: 8, title: chordNames[8], image:Image("UndefinedPick")),
+                Pick(id: 9, title: chordNames[9], image:Image("UndefinedPick"))]
+    }
+            
+    var body: some View {
         LazyVGrid(columns: columns, spacing:mySpacing) {
-                ForEach(boxes, id: \.id) { box in
-                    PickView(pick: box)
+                ForEach(getPicks(), id: \.id) { pick in
+                    PickView(pick: pick)
             }
         }
     }
@@ -93,19 +94,14 @@ struct ChordButtonsView: View {
                     setNewActiveChord()
                 }
             }){
-               getPickImage()
+                Image(getPickImageName())
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 100.0)
+                    .padding(10)
+                    .opacity(self.pick.title == kNoChordName ? 0.3 : 1.0)
+                    .disabled(self.pick.title == kNoChordName)
             }
-            
-        }
-        
-        func getPickImage() -> some View {
-            return Image(getPickImageName())
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(maxWidth: 100.0)
-                .padding(10)
-                .opacity(self.pick.title == kNoChordName ? 0.3 : 1.0)
-                .disabled(self.pick.title == kNoChordName)
         }
         
         func getPickImageName() -> String {
