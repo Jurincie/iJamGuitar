@@ -111,6 +111,9 @@ struct StringsView: View {
             .alert("Another app is using the Audio Player", isPresented: $stringsVM.showAudioPlayerInUseAlert) {
                 Button("OK", role: .cancel) { stringsVM.showAudioPlayerInUseAlert = false }
             }
+            .alert("Audio Player Error", isPresented: $stringsVM.showAudioPlayerErrorAlert) {
+                Button("OK", role: .cancel) { fatalError() }
+            }
     }
     
     struct FiveSpacerHStack: View {
