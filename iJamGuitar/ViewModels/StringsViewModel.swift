@@ -48,8 +48,12 @@ class StringsViewModel: ObservableObject {
                 thisAudioPlayer.prepareToPlay()
                 thisAudioPlayer.play()
             }
-            catch InitializeErrors.AVAudioSessionError{ fatalError() }
-            catch { fatalError() }
+            catch InitializeErrors.AVAudioSessionError{
+                showAudioPlayerErrorAlert = true
+            }
+            catch {
+                showAudioPlayerErrorAlert = true
+            }
         }
     }
     
@@ -60,8 +64,8 @@ class StringsViewModel: ObservableObject {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch let error {
+            showAudioPlayerErrorAlert = true
             debugPrint(error)
-            fatalError()
         }
     }
 
@@ -75,7 +79,10 @@ class StringsViewModel: ObservableObject {
                     }
                     audioPlayerArray.append(thisAudioPlayer)
                 } catch InitializeErrors.AVAudioSessionError{ fatalError() }
-                catch { fatalError() }
+                catch {
+                    showAudioPlayerErrorAlert = true
+                    fatalError()
+                }
             }
         }
     }
