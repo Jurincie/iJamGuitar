@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct CapoPositionPickerView: View {
-    @EnvironmentObject var vm:iJamGuitarViewModel
+    @EnvironmentObject var viewModel: iJamGuitarViewModel
     
     let frets = Range(-2...5)
     let kLabelWidth = 40.0
     
     func getCapoLabel() -> some View {
-        return Text("\(vm.capoPosition)")
+        return Text("\(viewModel.capoPosition)")
             .font(UIDevice.current.userInterfaceIdiom == .pad ? .title2 : .caption)
             .fontWeight(.semibold)
             .padding()
@@ -27,7 +27,7 @@ struct CapoPositionPickerView: View {
     var body: some View {
         VStack {
             Menu {
-               Picker("Capo Position", selection: $vm.capoPosition) {
+               Picker("Capo Position", selection: $viewModel.capoPosition) {
                    ForEach(frets, id: \.self) {
                        Text(String($0))
                    }

@@ -11,7 +11,6 @@
 		7AA07A2A2A040F6B00AE87B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7AA07A292A040F6B00AE87B3 /* Assets.xcassets */; };
 		7AA07A2D2A040F6B00AE87B3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7AA07A2C2A040F6B00AE87B3 /* Preview Assets.xcassets */; };
 		7AA07A2F2A040F6B00AE87B3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A2E2A040F6B00AE87B3 /* Persistence.swift */; };
-		7AA07A482A040F6B00AE87B3 /* iJamGuitarUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A472A040F6B00AE87B3 /* iJamGuitarUITestsLaunchTests.swift */; };
 		7AA07A562A04165900AE87B3 /* iJamGuitarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A552A04165900AE87B3 /* iJamGuitarModel.swift */; };
 		7AA07A602A0416EC00AE87B3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A5C2A0416EB00AE87B3 /* Extensions.swift */; };
 		7AA07A612A0416EC00AE87B3 /* iJamViewModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A5D2A0416EB00AE87B3 /* iJamViewModelExtension.swift */; };
@@ -39,7 +38,6 @@
 		7AA07A902A0417E800AE87B3 /* CapoPositionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A822A0417E800AE87B3 /* CapoPositionPickerView.swift */; };
 		7AA07A912A0417E800AE87B3 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A832A0417E800AE87B3 /* TopView.swift */; };
 		7AA07A922A0417E800AE87B3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A842A0417E800AE87B3 /* ContentView.swift */; };
-		7AA07A972A044C6B00AE87B3 /* iJamGuitarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A452A040F6B00AE87B3 /* iJamGuitarUITests.swift */; };
 		7AB446D22A0DC2C1005B8F88 /* iJamGuitarModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7AB446D02A0DC2C1005B8F88 /* iJamGuitarModel.xcdatamodeld */; };
 		7AB446D72A0DCDCA005B8F88 /* iJamGuitarUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB446D62A0DCDCA005B8F88 /* iJamGuitarUnitTests.swift */; };
 /* End PBXBuildFile section */
@@ -69,8 +67,6 @@
 		7AA07A2E2A040F6B00AE87B3 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		7AA07A372A040F6B00AE87B3 /* iJamGuitarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iJamGuitarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AA07A412A040F6B00AE87B3 /* iJamGuitarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iJamGuitarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7AA07A452A040F6B00AE87B3 /* iJamGuitarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iJamGuitarUITests.swift; sourceTree = "<group>"; };
-		7AA07A472A040F6B00AE87B3 /* iJamGuitarUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iJamGuitarUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7AA07A552A04165900AE87B3 /* iJamGuitarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = iJamGuitarModel.swift; path = ViewModels/iJamGuitarModel.swift; sourceTree = SOURCE_ROOT; };
 		7AA07A5C2A0416EB00AE87B3 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = iJamGuitar/ViewModels/Extensions.swift; sourceTree = SOURCE_ROOT; };
 		7AA07A5D2A0416EB00AE87B3 /* iJamViewModelExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = iJamViewModelExtension.swift; path = iJamGuitar/ViewModels/iJamViewModelExtension.swift; sourceTree = SOURCE_ROOT; };
@@ -133,8 +129,7 @@
 			children = (
 				7AA07A652A04175200AE87B3 /* Property Lists */,
 				7AA07A242A040F6A00AE87B3 /* iJamGuitar */,
-				7AA07A3A2A040F6B00AE87B3 /* iJamGuitarTests */,
-				7AA07A442A040F6B00AE87B3 /* iJamGuitarUITests */,
+				7AA07A3A2A040F6B00AE87B3 /* iJamGuitarUnitTests */,
 				7AA07A232A040F6A00AE87B3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -171,22 +166,13 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		7AA07A3A2A040F6B00AE87B3 /* iJamGuitarTests */ = {
+		7AA07A3A2A040F6B00AE87B3 /* iJamGuitarUnitTests */ = {
 			isa = PBXGroup;
 			children = (
 				7AB446D62A0DCDCA005B8F88 /* iJamGuitarUnitTests.swift */,
 				7AB446D52A0DCDC9005B8F88 /* iJamGuitarTests-Bridging-Header.h */,
 			);
-			path = iJamGuitarTests;
-			sourceTree = "<group>";
-		};
-		7AA07A442A040F6B00AE87B3 /* iJamGuitarUITests */ = {
-			isa = PBXGroup;
-			children = (
-				7AA07A452A040F6B00AE87B3 /* iJamGuitarUITests.swift */,
-				7AA07A472A040F6B00AE87B3 /* iJamGuitarUITestsLaunchTests.swift */,
-			);
-			path = iJamGuitarUITests;
+			path = iJamGuitarUnitTests;
 			sourceTree = "<group>";
 		};
 		7AA07A5B2A0416C100AE87B3 /* ViewModels */ = {
@@ -414,8 +400,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7AA07A972A044C6B00AE87B3 /* iJamGuitarUITests.swift in Sources */,
-				7AA07A482A040F6B00AE87B3 /* iJamGuitarUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -35,7 +35,7 @@ struct StringsView: View {
     @StateObject private var stringsVM = StringsViewModel()
     @State var tapLocation: CGPoint?
     @State var dragLocation: CGPoint?
-    @State private var presentAlert = false
+    @State private var presentVolumeAlert = false
     var height: CGFloat = 0.0
     let kHalfStringWidh = 5.0
     let kNoFret = -1
@@ -48,25 +48,23 @@ struct StringsView: View {
             guard let location = dragLocation else { return }
             let zone = stringsVM.getZone(loc: location)
             guard zone != stringsVM.formerZone else { return }
-            debugPrint("====> Zone: \(zone)")
+            debugPrint("====> New Zone: \(zone)")
 
             if zone % 2 == 0 && vm.appState?.isMuted == false {
                 if(AVAudioSession.sharedInstance().outputVolume == 0.0) {
                     // Alert user that their volume is off
-                    presentAlert = true
+                    presentVolumeAlert = true
                 }
                 let stringToPlay: Int = stringNumberToPlay(zone: zone, oldZone: stringsVM.formerZone)
                 guard stringToPlay > 0 && stringToPlay < 7 else { return }
                 let fretPosition = vm.fretIndexMap[6 - stringToPlay]
-                
                 if fretPosition > kNoFret {
-                    debugPrint("=====> string to play: \(stringToPlay)")
                     if let noteIndices = openNotes,
-                        let thisStringsOpenIndex    = Int(noteIndices[6 - stringToPlay]) {
+                       let thisStringsOpenIndex    = Int(noteIndices[6 - stringToPlay]) {
                         let index                   = fretPosition + thisStringsOpenIndex + vm.capoPosition
                         let noteToPlayName          = stringsVM.noteNamesArray[index]
                         let volume                  = vm.appState?.volumeLevel?.doubleValue  ?? 0.0
-                        
+
                         stringsVM.playWaveFile(noteName:noteToPlayName,
                                                stringNumber: stringToPlay,
                                                volume: volume / 10.0)
@@ -80,35 +78,38 @@ struct StringsView: View {
             FiveSpacerHStack()
             HStack(spacing:0) {
                 StringView(height:height, stringNumber: 6, fretNumber: vm.fretIndexMap[0]) .readFrame { newFrame in
-                    stringsVM.zoneBreaks[0] = ((newFrame.maxX + newFrame.minX) / 2.0)
+                    stringsVM.zoneBreaks[0] = ((newFrame.maxX + newFrame.minX) / 2.0) - 5.0
                 }
                 Spacer()
                 StringView(height:height, stringNumber: 5, fretNumber: vm.fretIndexMap[1]) .readFrame { newFrame in
-                    stringsVM.zoneBreaks[1] = ((newFrame.maxX + newFrame.minX) / 2.0)
+                    stringsVM.zoneBreaks[1] = ((newFrame.maxX + newFrame.minX) / 2.0) - 5.0
                 }
                 Spacer()
                 StringView(height:height, stringNumber: 4, fretNumber: vm.fretIndexMap[2]) .readFrame { newFrame in
-                    stringsVM.zoneBreaks[2] = ((newFrame.maxX + newFrame.minX) / 2.0)
+                    stringsVM.zoneBreaks[2] = ((newFrame.maxX + newFrame.minX) / 2.0) - 5.0
                 }
             }
             HStack() {
                 Spacer()
                 StringView(height:height, stringNumber: 3, fretNumber: vm.fretIndexMap[3]) .readFrame { newFrame in
-                    stringsVM.zoneBreaks[3] = ((newFrame.maxX + newFrame.minX) / 2.0)
+                    stringsVM.zoneBreaks[3] = ((newFrame.maxX + newFrame.minX) / 2.0) - 5.0
                 }
                 Spacer()
                 StringView(height:height, stringNumber: 2, fretNumber: vm.fretIndexMap[4]) .readFrame { newFrame in
-                    stringsVM.zoneBreaks[4] = ((newFrame.maxX + newFrame.minX) / 2.0)
+                    stringsVM.zoneBreaks[4] = ((newFrame.maxX + newFrame.minX) / 2.0) - 5.0
                 }
                 Spacer()
                 StringView(height:height, stringNumber: 1, fretNumber: vm.fretIndexMap[5]).readFrame { newFrame in
-                    stringsVM.zoneBreaks[5] = ((newFrame.maxX + newFrame.minX) / 2.0)
+                    stringsVM.zoneBreaks[5] = ((newFrame.maxX + newFrame.minX) / 2.0) - 5.0
                 }
             }
             FiveSpacerHStack()
         }.gesture(drag)
-            .alert("You have other Audio already playing...", isPresented: $stringsVM.showingAlert) {
-                Button("OK", role: .cancel) { }
+            .alert("Master Volume is OFF", isPresented: $presentVolumeAlert) {
+                Button("OK", role: .cancel) { presentVolumeAlert = false }
+            }
+            .alert("Another app is using the Audio Player", isPresented: $stringsVM.showAudioPlayerInUseAlert) {
+                Button("OK", role: .cancel) { stringsVM.showAudioPlayerInUseAlert = false }
             }
     }
     

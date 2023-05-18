@@ -22,7 +22,8 @@ struct FramePreferenceKey: PreferenceKey {
 }
 
 class StringsViewModel: ObservableObject {
-    @State var showingAlert = false
+    @State var showAudioPlayerInUseAlert = false
+    @State var showAudioPlayerErrorAlert = false
     let kStringWidth = 10.0
     @Published var stringNumber:Int     = 0
     @Published var formerZone           = -1
@@ -60,7 +61,7 @@ class StringsViewModel: ObservableObject {
             try AVAudioSession.sharedInstance().setActive(true)
         } catch let error {
             debugPrint(error)
-            showingAlert.toggle()
+            fatalError()
         }
     }
 
@@ -69,6 +70,9 @@ class StringsViewModel: ObservableObject {
             if let asset = NSDataAsset(name:"NoNote"){
                 do {
                     let thisAudioPlayer = try AVAudioPlayer(data:asset.data, fileTypeHint:"wav")
+                    if thisAudioPlayer.isPlaying {
+                        showAudioPlayerInUseAlert = true
+                    }
                     audioPlayerArray.append(thisAudioPlayer)
                 } catch InitializeErrors.AVAudioSessionError{ fatalError() }
                 catch { fatalError() }

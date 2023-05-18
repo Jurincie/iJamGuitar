@@ -7,10 +7,11 @@
 
 import Foundation
 import CoreData
+import AVFoundation
 
 class iJamGuitarViewModel: ObservableObject {
     private (set) var context = PersistenceController.shared.container.viewContext
-    
+    @Published var showAudioNotAvailableAlert: Bool = false
     @Published var appState: AppState?
     @Published var activeTuning: Tuning?
     @Published var activeChordGroup: ChordGroup?
@@ -56,9 +57,16 @@ class iJamGuitarViewModel: ObservableObject {
         fretIndexMap            = getFretIndexMap(chord: activeChord)
         availableChords         = getAvailableChords(activeChordGroup: activeChordGroup, activeTuning: activeTuning)
         
+        // if another app is using AudioPlayer -> show alert
+        showAudioNotAvailableAlert = AVAudioSession.sharedInstance().isOtherAudioPlaying
+        
         if let muted = appState?.isMuted {
             isMuted = muted
         }
+    }
+    
+    func refreshWhenAppBecomesActive() {
+        
     }
 }
 
