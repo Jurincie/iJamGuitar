@@ -42,8 +42,42 @@ class iJamGuitarViewModel: ObservableObject {
         didSet {
             appState?.activeTuning?.activeChordGroup?.activeChord = activeChord
             fretIndexMap = getFretIndexMap(chord: activeChord)
-            minimumFret = getMinDisplayedFret()
+            minimumFret = getinimumDisplayedFret()
         }
+    }
+    
+    /// This var calculates the lowest displayed fret above the nut for the activeChord in the activeChordGroup in the activeTuning
+    /// - Returns: Int of the lowest displayed fret above the nut
+    /// Note: must be > the nut Int
+    func getinimumDisplayedFret() -> Int {
+        guard let fretChars = activeChord?.fretMap else { return 0 }
+        var highest = 0
+        var thisFretVal = 0
+        
+        for char in fretChars {
+            switch char {
+                // span does NOT include open string nor muted strings
+            case "x":
+                break
+            case "A":
+                thisFretVal = 11
+            case "B":
+                thisFretVal = 12
+            case "C":
+                thisFretVal = 13
+            case "D":
+                thisFretVal = 14
+            default:
+                if let intValue = char.wholeNumberValue {
+                    thisFretVal = intValue
+                } else {
+                    thisFretVal = 0
+                }
+            }
+            highest = max(highest, thisFretVal)
+        }
+        
+        return highest < 6 ? 1 : max(1, highest - 4)
     }
 
     init() {
@@ -53,7 +87,7 @@ class iJamGuitarViewModel: ObservableObject {
         activeChordGroupName    = activeChordGroup?.name ?? "xxx"
         selectedIndex           = getSelectedChordButtonIndex()
         activeChord             = activeChordGroup?.activeChord
-        minimumFret             = getMinDisplayedFret()
+        minimumFret             = getinimumDisplayedFret()
         fretIndexMap            = getFretIndexMap(chord: activeChord)
         availableChords         = getAvailableChords(activeChordGroup: activeChordGroup, activeTuning: activeTuning)
         
@@ -63,10 +97,6 @@ class iJamGuitarViewModel: ObservableObject {
         if let muted = appState?.isMuted {
             isMuted = muted
         }
-    }
-    
-    func refreshWhenAppBecomesActive() {
-        
     }
 }
 

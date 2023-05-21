@@ -1,5 +1,5 @@
 //
-//  IJamViewModelExtension.swift
+//  IJamGuitarViewModelExtension.swift
 //  iJamGuitar
 //
 //  Created by Ron Jurincie on 4/2/23.
@@ -10,7 +10,8 @@ import CoreData
 
 extension iJamGuitarViewModel
 {
-    ///
+    /// This method takes a name associated with appState.Tunings names
+    /// and returns an associated Tuning if able, otherwise is return nil
     /// - Parameter name: name-> The name selected by user in Tuning Picker
     /// - Returns:Tuning associated with Name
     func getTuning(name: String) -> Tuning? {
@@ -47,6 +48,10 @@ extension iJamGuitarViewModel
         try? context.save()
     }
     
+    ///  This method instantiates and returns a new ChordGroup based upon the name parameter.
+    ///     if no such ChordGroup with that name exists, this method returns nil
+    /// - Parameter name: name-> The name selected by user in ChordGroup Picker
+    /// - Returns: Optional(ChordGroup)
     func getChordGroup(name: String) -> ChordGroup? {
         var newChordGroup: ChordGroup? = nil
         
@@ -61,6 +66,12 @@ extension iJamGuitarViewModel
         return newChordGroup
     }
     
+    ///  This method sets the newly instantiated newChordGroup as the appState.activeChordGroup.
+    ///  Then sets the appState.availableChords to the chords associated with this newChordGroup.
+    ///  Then sets the appState.activeChord to the newChordGroup.activeChord
+    ///  Then sets the appState.selectedIndex via getSelectedChordButtonIndex()
+    ///  Then saves the context.
+    /// - Parameter newChordGroup: a recently instantiated newChordGroup
     func setActiveChordGroup(newChordGroup: ChordGroup) {
         activeChordGroup = newChordGroup
         availableChords = getAvailableChords(activeChordGroup: newChordGroup, activeTuning: activeTuning)
@@ -69,7 +80,9 @@ extension iJamGuitarViewModel
         selectedIndex = getSelectedChordButtonIndex()
         try? context.save()
     }
-        
+    
+    /// This method returns an array of names associated with available appState.Tunings
+    /// - Returns: an Array of Strings containing the names of the available Tunings.
     func getTuningNames() -> [String] {
         var tuningNames: [String] = []
         if let tuningsArray: [Tuning] = self.appState?.tunings?.allObjects as? [Tuning] {
@@ -80,6 +93,8 @@ extension iJamGuitarViewModel
         return tuningNames
     }
     
+    /// This method returns an array of names associated with appState.activeTuning.chordGroup.names
+    /// - Returns: an Array of Strings containing the available chordGroup names for appState.activeTuning.
     func getChordGroupNames() -> [String] {
         var chordGroupNames: [String] = []
         
@@ -89,37 +104,6 @@ extension iJamGuitarViewModel
             }
         }
         return chordGroupNames
-    }
-    
-    func getMinDisplayedFret() -> Int {
-        guard let fretChars = activeChord?.fretMap else { return 0 }
-        var highest = 0
-        var thisFretVal = 0
-        
-        for char in fretChars {
-            switch char {
-                // span does NOT include open string nor muted strings
-            case "x":
-                break
-            case "A":
-                thisFretVal = 11
-            case "B":
-                thisFretVal = 12
-            case "C":
-                thisFretVal = 13
-            case "D":
-                thisFretVal = 14
-            default:
-                if let intValue = char.wholeNumberValue {
-                    thisFretVal = intValue
-                } else {
-                    thisFretVal = 0
-                }
-            }
-            highest = max(highest, thisFretVal)
-        }
-        
-        return highest < 6 ? 1 : max(1, highest - 4)
     }
   
     func getSelectedChordButtonIndex() -> Int {
