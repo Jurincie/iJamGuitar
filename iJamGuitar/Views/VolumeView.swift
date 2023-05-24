@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct VolumeView: View {
-    @EnvironmentObject var vm:iJamGuitarViewModel
+    @EnvironmentObject var vm: iJamGuitarViewModel
     @State private var isEditing = false
-    var imageSize = UIDevice.current.userInterfaceIdiom == .pad ? 35.0 : 25.0
+    var imageWidth = UIDevice.current.userInterfaceIdiom == .pad ? 35.0 : 25.0
     
-    func getSlider() -> some View {
+    func VolumeSlider() -> some View {
         Slider(
             value: $vm.volumeLevel,
             in: 0...10,
@@ -25,10 +25,10 @@ struct VolumeView: View {
             })
     }
     
-    func getSpeakerImage() -> some View {
+    func SpeakerImage() -> some View {
         Image(systemName: vm.isMuted ? "speaker.slash.fill" : "speaker.wave.1")
             .resizable()
-            .frame(width: imageSize, height: imageSize)
+            .frame(width: imageWidth, height: imageWidth)
             .shadow(radius: 10)
             .foregroundColor(Color.white)
             .padding(10)
@@ -45,9 +45,9 @@ struct VolumeView: View {
                     updateIsMuted()
                     try? vm.context.save()
                 }) {
-                    getSpeakerImage()
+                    SpeakerImage()
                 }
-                getSlider()
+                VolumeSlider()
                 Spacer()
             }
             Spacer()

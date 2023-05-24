@@ -22,6 +22,7 @@ struct FramePreferenceKey: PreferenceKey {
 }
 
 class StringsViewModel: ObservableObject {
+    
     @State var showAudioPlayerInUseAlert = false
     @State var showAudioPlayerErrorAlert = false
     let kStringWidth = 10.0

@@ -7,25 +7,6 @@
 
 import SwiftUI
 
-func getFontSize(targetString:String) -> Double {
-    
-    switch targetString.count {
-    case 1:     return UIDevice.current.userInterfaceIdiom == .pad ? 28.0 : 22.0
-    case 2:     return UIDevice.current.userInterfaceIdiom == .pad ? 26.0 : 20.0
-    case 3:     return UIDevice.current.userInterfaceIdiom == .pad ? 24.0 : 18.0
-    case 4, 5:  return UIDevice.current.userInterfaceIdiom == .pad ? 18.0 : 14.0
-    default:    return UIDevice.current.userInterfaceIdiom == .pad ? 14.0 : 10.0
-    }
-}
-
-func getPickTitle(name:String?) -> String {
-    if let title = name {
-        return title
-    }
-        
-    return ""
-}
-
 struct ChordButtonsView: View {
     @EnvironmentObject var iJamGuitarVM: iJamGuitarViewModel
     var width:CGFloat   = 0.0
@@ -36,17 +17,13 @@ struct ChordButtonsView: View {
     
     func getPicks() -> [Pick] {
         let chordNames:[String] = iJamGuitarVM.getAvailableChordNames(activeChordGroup: iJamGuitarVM.activeChordGroup)
+        var pickArray: [Pick] = []
         
-        return [Pick(id: 0, title: chordNames[0], image:Image("UndefinedPick")),
-                Pick(id: 1, title: chordNames[1], image:Image("UndefinedPick")),
-                Pick(id: 2, title: chordNames[2], image:Image("UndefinedPick")),
-                Pick(id: 3, title: chordNames[3], image:Image("UndefinedPick")),
-                Pick(id: 4, title: chordNames[4], image:Image("UndefinedPick")),
-                Pick(id: 5, title: chordNames[5], image:Image("UndefinedPick")),
-                Pick(id: 6, title: chordNames[6], image:Image("UndefinedPick")),
-                Pick(id: 7, title: chordNames[7], image:Image("UndefinedPick")),
-                Pick(id: 8, title: chordNames[8], image:Image("UndefinedPick")),
-                Pick(id: 9, title: chordNames[9], image:Image("UndefinedPick"))]
+        for index in 0..<10 {
+            pickArray.append(Pick(id: index, title: chordNames[index], image:Image("UndefinedPick")))
+        }
+        
+        return pickArray
     }
             
     var body: some View {
@@ -61,6 +38,13 @@ struct ChordButtonsView: View {
         var id: Int
         var title: String
         var image:Image
+    }
+    
+    struct PulseButtonStyle: ButtonStyle {
+        func makeBody(configuration: Self.Configuration) -> some View {
+            configuration.label
+                .scaleEffect(configuration.isPressed ? 1.3 : 1.0)
+        }
     }
     
     struct PickView: View {
@@ -81,7 +65,7 @@ struct ChordButtonsView: View {
                     .font(.custom("Arial Rounded MT Bold", size: getFontSize(targetString: self.pick.title)))
             }
             .cornerRadius(10.0)
-            .rotationEffect(Angle(degrees: isAnimated ? 720 : 0))
+            .rotationEffect(Angle(degrees: isAnimated ? 360 : 0))
             .shadow(color: Color.white, radius: 20.0)
         }
         
@@ -129,6 +113,25 @@ struct ChordButtonsView: View {
                 }
                 isAnimated.toggle()
             }
+        }
+        
+        func getFontSize(targetString:String) -> Double {
+            
+            switch targetString.count {
+            case 1:     return UIDevice.current.userInterfaceIdiom == .pad ? 28.0 : 22.0
+            case 2:     return UIDevice.current.userInterfaceIdiom == .pad ? 26.0 : 20.0
+            case 3:     return UIDevice.current.userInterfaceIdiom == .pad ? 24.0 : 18.0
+            case 4, 5:  return UIDevice.current.userInterfaceIdiom == .pad ? 18.0 : 14.0
+            default:    return UIDevice.current.userInterfaceIdiom == .pad ? 14.0 : 10.0
+            }
+        }
+
+        func getPickTitle(name:String?) -> String {
+            if let title = name {
+                return title
+            }
+                
+            return ""
         }
     }
 }
