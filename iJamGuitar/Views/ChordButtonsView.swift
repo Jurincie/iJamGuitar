@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChordButtonsView: View {
-    @EnvironmentObject var iJamGuitarVM: iJamGuitarViewModel
+    @EnvironmentObject var iJamGuitarMoodel: iJamGuitarModel
     var width:CGFloat   = 0.0
     var height:CGFloat  = 0.0
     let mySpacing:CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 36.0 : 12.0
@@ -16,7 +16,7 @@ struct ChordButtonsView: View {
     private var activeButtonId: Int = -1
     
     func getPicks() -> [Pick] {
-        let chordNames:[String] = iJamGuitarVM.getAvailableChordNames(activeChordGroup: iJamGuitarVM.activeChordGroup)
+        let chordNames:[String] = iJamGuitarMoodel.getAvailableChordNames(activeChordGroup: iJamGuitarMoodel.activeChordGroup)
         var pickArray: [Pick] = []
         
         for index in 0..<10 {
@@ -48,7 +48,7 @@ struct ChordButtonsView: View {
     }
     
     struct PickView: View {
-        @EnvironmentObject var vm: iJamGuitarViewModel
+        @EnvironmentObject var model: iJamGuitarModel
         @State private var isAnimated: Bool = false
         var pick: Pick
         let noChordArray = [Int](repeating: -1, count: 10)
@@ -65,13 +65,13 @@ struct ChordButtonsView: View {
                     .font(.custom("Arial Rounded MT Bold", size: getFontSize(targetString: self.pick.title)))
             }
             .cornerRadius(10.0)
-            .rotationEffect(Angle(degrees: isAnimated ? 360 : 0))
+            .rotationEffect(Angle(degrees: self.pick.title == kNoChordName ? 0 : isAnimated ? 360 : 0))
             .shadow(color: Color.white, radius: 20.0)
         }
         
         func getPickButton() -> some View {
            return Button(action: {
-                if vm.selectedIndex != pick.id {
+                if model.selectedChordIndex != pick.id {
                     withAnimation(.default) {
                         isAnimated.toggle()
                     }
@@ -90,11 +90,11 @@ struct ChordButtonsView: View {
         
         func getPickImageName() -> String {
             var pickImageName = ""
-            if vm.selectedIndex == self.pick.id {
-                let thisChord = vm.availableChords[self.pick.id]
-                pickImageName =  vm.fretIndexMap != vm.getFretIndexMap(chord: thisChord) ? "ModifiedPick" : "ActivePick"
+            if model.selectedChordIndex == self.pick.id {
+                let thisChord = model.availableChords[self.pick.id]
+                pickImageName =  model.fretIndexMap != model.getFretIndexMap(chord: thisChord) ? "ModifiedPick" : "ActivePick"
             } else {
-                pickImageName = self.pick.id < vm.availableChords.count ? "BlankPick" : "UndefinedPick"
+                pickImageName = self.pick.id < model.availableChords.count ? "BlankPick" : "UndefinedPick"
             }
             
             return pickImageName
@@ -102,14 +102,14 @@ struct ChordButtonsView: View {
         
         /// sets vm.activeChord and vm.selectedIndex
         func setNewActiveChord() {
-            if let chordNames = vm.activeChordGroup?.availableChordNames?.components(separatedBy: ["-"]) {
+            if let chordNames = model.activeChordGroup?.availableChordNames?.components(separatedBy: ["-"]) {
                 if self.pick.id < chordNames.count {
                     let newActiveChordName = chordNames[self.pick.id]
-                    if let newActiveChord = vm.getChord(name: newActiveChordName, tuning: vm.activeTuning) {
-                        vm.activeChord = newActiveChord
-                        vm.selectedIndex = self.pick.id
+                    if let newActiveChord = model.getChord(name: newActiveChordName, tuning: model.activeTuning) {
+                        model.activeChord = newActiveChord
+                        model.selectedChordIndex = self.pick.id
                     }
-                    try? vm.context.save()
+                    try? model.context.save()
                 }
                 isAnimated.toggle()
             }

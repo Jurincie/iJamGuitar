@@ -9,13 +9,13 @@ import SwiftUI
 
 struct TuningPickerView: View {
    
-    @EnvironmentObject var vm:iJamGuitarViewModel
+    @EnvironmentObject var model: iJamGuitarModel
 
     var body: some View {
        VStack {
            Menu {
-               Picker("Tunings", selection: $vm.activeTuningName) {
-                   ForEach(vm.getTuningNames(), id: \.self) {
+               Picker("Tunings", selection: $model.activeTuningName) {
+                   ForEach(model.getTuningNames(), id: \.self) {
                        Text($0)
                    }
                }
@@ -23,7 +23,7 @@ struct TuningPickerView: View {
                .pickerStyle(.menu)
                .frame(maxWidth: .infinity)
            } label: {
-               Text("Tuning: \(vm.activeTuningName)")
+               Text("Tuning: \(model.activeTuningName)")
                    .padding(10)
                    .font(UIDevice.current.userInterfaceIdiom == .pad ? .title2 : .caption)
                    .fontWeight(.semibold)

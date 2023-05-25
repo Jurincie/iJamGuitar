@@ -9,7 +9,8 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @StateObject var vm = iJamGuitarViewModel()
+    
+    @StateObject var model = iJamGuitarModel()
     var x = 0.0
     var body: some View {
         GeometryReader { geo in
@@ -32,7 +33,7 @@ struct ContentView: View {
             .position(centered)
         }
         .background(Color.black)
-        .environmentObject(vm)  // inject iJamGuitarViewModel into environment
+        .environmentObject(model)  // inject iJamGuitarViewModel into environment
     }
 }
 

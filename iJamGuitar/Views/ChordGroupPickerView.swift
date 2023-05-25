@@ -9,13 +9,13 @@ import SwiftUI
 
 @available(iOS 16.0, *)
 struct ChordGroupPickerView: View {
-    @EnvironmentObject var vm:iJamGuitarViewModel
+    @EnvironmentObject var model: iJamGuitarModel
     
     var body: some View {
         VStack {
             Menu {
-                Picker("Chord Groups", selection: $vm.activeChordGroupName) {
-                    ForEach(vm.getChordGroupNames(), id: \.self) {
+                Picker("Chord Groups", selection: $model.activeChordGroupName) {
+                    ForEach(model.getChordGroupNames(), id: \.self) {
                         Text($0)
                     }
                 }
@@ -23,7 +23,7 @@ struct ChordGroupPickerView: View {
                 .pickerStyle(.menu)
                 .frame(maxWidth: .infinity)
             } label: {
-                Text(vm.activeChordGroupName)
+                Text(model.activeChordGroupName)
                     .padding(10)
                     .font(UIDevice.current.userInterfaceIdiom == .pad ? .title2 : .caption)
                     .fontWeight(.semibold)

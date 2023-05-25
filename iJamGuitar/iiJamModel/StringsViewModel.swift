@@ -25,21 +25,19 @@ class StringsViewModel: ObservableObject {
     
     @State var showAudioPlayerInUseAlert = false
     @State var showAudioPlayerErrorAlert = false
+    var stringsXlocations: [CGPoint] = []
     let kStringWidth = 10.0
     @Published var stringNumber:Int     = 0
     @Published var formerZone           = -1
     @Published var zoneBreaks:[Double]  = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     @Published var audioPlayerArray     = [AVAudioPlayer?]() // contains 1 audioPlayer for each guitar string 6-1
     @Published var noteNamesArray       = ["DoubleLow_C.wav", "DoubleLow_C#.wav", "DoubleLow_D.wav", "DoubleLow_D#.wav", "Low_E.wav", "Low_F.wav", "Low_F#.wav", "Low_G.wav", "Low_G#.wav", "Low_A.wav", "Low_A#.wav", "Low_B.wav", "Low_C.wav", "Low_C#.wav", "Low_D.wav", "Low_D#.wav", "E.wav", "F.wav", "F#.wav", "G.wav", "G#.wav", "A.wav", "A#.wav", "B.wav", "C.wav", "C#.wav", "D.wav", "D#.wav", "High_E.wav", "High_F.wav", "High_F#.wav", "High_G.wav", "High_G#.wav", "High_A.wav", "High_A#.wav", "High_B.wav", "High_C.wav", "High_C#.wav", "High_D.wav", "High_D#.wav", "DoubleHigh_E.wav", "DoubleHigh_F.wav"]
-    var stringsXlocations: [CGPoint] = []
     
     func playWaveFile(noteName: String,
                       stringNumber: Int,
                       volume: Double) {
         let prefix = String(noteName.prefix(noteName.count - 4))  // trims ".wav" from end
-        
         debugPrint("====> playing String: \(stringNumber) note: \(noteName)")
-        
         if let asset = NSDataAsset(name:prefix) {
             do {
                 let thisAudioPlayer                 = try AVAudioPlayer(data:asset.data, fileTypeHint:"wav")

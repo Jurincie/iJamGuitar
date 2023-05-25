@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FretNumbersView: View {
-    @EnvironmentObject var vm:iJamGuitarViewModel
+    @EnvironmentObject var model: iJamGuitarModel
     var width:CGFloat = 0.0
     var height:CGFloat = 0.0
      
@@ -23,7 +23,7 @@ struct FretNumbersView: View {
                 .stroke(.white, lineWidth: 2))
             // next 5 rows span the chord - from minfret to minFret + 5)
             ForEach((0...4), id: \.self) {
-                Text(String(vm.capoPosition + vm.minimumFret + Int($0)))
+                Text(String(model.capoPosition + model.minimumFret + Int($0)))
                     .font(UIDevice.current.userInterfaceIdiom == .pad ? .title2 : .caption)
                     .fontWeight(.semibold)
                     .frame(width: width, height: height / 6, alignment: .center)

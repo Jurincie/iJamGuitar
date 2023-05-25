@@ -14,7 +14,7 @@ import AVFAudio
 final class iJamViewModelTests: XCTestCase {
     // Given
     let stringsVM = StringsViewModel()
-    let viewModel = iJamGuitarViewModel()
+    let model = iJamGuitarModel()
     let tooBig = 20
 
     override func setUpWithError() throws {
@@ -27,7 +27,7 @@ final class iJamViewModelTests: XCTestCase {
     
     func test_iJamViewModel_getAvailableChordNames_returnsArrayOfTenStrings() {
         // When:
-        let chordNameArray: [String] = viewModel.getAvailableChordNames(activeChordGroup: viewModel.activeChordGroup)
+        let chordNameArray: [String] = model.getAvailableChordNames(activeChordGroup: model.activeChordGroup)
             
         // Then:
         XCTAssertEqual(chordNameArray.count, 10)
@@ -37,9 +37,9 @@ final class iJamViewModelTests: XCTestCase {
         XCTAssertEqual(stringsVM.noteNamesArray.count, 42)
     }
     
-    func test_iJamViewModel_Tunings_ChordsMeetRequirements() {
+    func test_iJamGuitarModel_Tunings_ChordsMeetRequirements() {
         
-        if let allTunings = viewModel.appState?.tunings {
+        if let allTunings = model.appState?.tunings {
             if let tunings = Array(allTunings) as? [Tuning] {
                 for tuning in tunings {
                     
@@ -90,7 +90,7 @@ final class iJamViewModelTests: XCTestCase {
         
         for char in fretMap {
             if char != "x" && char != "0" {
-                let fret = viewModel.getFretFromChar(char)
+                let fret = model.getFretFromChar(char)
                 maxFret = max(maxFret, fret)
                 minFret = min(minFret, fret)
             }

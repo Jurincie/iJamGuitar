@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension iJamGuitarViewModel
+extension iJamGuitarModel
 {
     /// This method takes a name associated with appState.Tunings names
     /// and returns an associated Tuning if able, otherwise is return nil
@@ -44,7 +44,7 @@ extension iJamGuitarViewModel
         appState?.activeTuning?.activeChordGroup = newTuning.activeChordGroup
         availableChords = getAvailableChords(activeChordGroup: activeChordGroup, activeTuning: activeTuning)
         fretIndexMap = getFretIndexMap(chord: activeChordGroup?.activeChord)
-        selectedIndex = getSelectedChordButtonIndex()
+        selectedChordIndex = getSelectedChordButtonIndex()
         try? context.save()
     }
     
@@ -77,7 +77,7 @@ extension iJamGuitarViewModel
         availableChords = getAvailableChords(activeChordGroup: newChordGroup, activeTuning: activeTuning)
         appState?.activeTuning?.activeChordGroup = newChordGroup
         activeChord = newChordGroup.activeChord
-        selectedIndex = getSelectedChordButtonIndex()
+        selectedChordIndex = getSelectedChordButtonIndex()
         try? context.save()
     }
     
