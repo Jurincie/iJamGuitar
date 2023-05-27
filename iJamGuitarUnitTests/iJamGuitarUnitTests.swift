@@ -13,7 +13,7 @@ import AVFAudio
 
 final class iJamViewModelTests: XCTestCase {
     // Given
-    let stringsVM = StringsViewModel()
+    let stringsVM = iJamAudioManager()
     let model = iJamGuitarModel()
     let tooBig = 20
 
@@ -33,7 +33,7 @@ final class iJamViewModelTests: XCTestCase {
         XCTAssertEqual(chordNameArray.count, 10)
     }
    
-    func test_StringsViewModel_noteNamesArray_shouldHaveFortyTwoElements() {
+    func test_iJamAudioManager_noteNamesArray_shouldHaveFortyTwoElements() {
         XCTAssertEqual(stringsVM.noteNamesArray.count, 42)
     }
     
@@ -54,7 +54,7 @@ final class iJamViewModelTests: XCTestCase {
         }
     }
         
-    func test_StringsViewModel_formerZone_shouldInitializeToNegativeOne () {
+    func test_iJamAudioManager_formerZone_shouldInitializeToNegativeOne () {
         // When
         let zone = stringsVM.formerZone
         
@@ -62,7 +62,7 @@ final class iJamViewModelTests: XCTestCase {
         XCTAssertEqual(zone, -1)
     }
     
-    func test_StringsViewModel_audioPlayerArray_ShouldHaveSixAudioPlayers() {
+    func test_iJamAudioManager_audioPlayerArray_ShouldHaveSixAudioPlayers() {
         // When
         XCTAssertNotNil(stringsVM.audioPlayerArray)
         XCTAssertEqual(stringsVM.audioPlayerArray.count, 6)
@@ -76,7 +76,7 @@ final class iJamViewModelTests: XCTestCase {
         }
     }
     
-    func test_StringsViewModel_thisZone_shouldInitializeToNegativeOne () {
+    func test_iJamAudioManager_thisZone_shouldInitializeToNegativeOne () {
         // When
         let zone = stringsVM.formerZone
 

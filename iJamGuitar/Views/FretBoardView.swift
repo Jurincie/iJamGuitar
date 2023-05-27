@@ -12,7 +12,7 @@ struct FretBoardView: View {
     var height:CGFloat = 0.0
     
     var body: some View {
-        // width coming in is 78% of parent (StringsAndFretsAreaView)
+        // width coming in is 76% of parent (StringsAndFretsAreaView)
         // height is parents trueHeight / 2
         // since this covers bottom half of parent (StringsAndFretsAreaView)
         VStack() {

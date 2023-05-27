@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ChordButtonsView: View {
     @EnvironmentObject var iJamGuitarMoodel: iJamGuitarModel
-    var width:CGFloat   = 0.0
-    var height:CGFloat  = 0.0
+    var width:CGFloat = 0.0
+    var height:CGFloat = 0.0
     let mySpacing:CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 36.0 : 12.0
     private let columns = Array(repeating: GridItem(.flexible()), count: 5)
     private var activeButtonId: Int = -1
@@ -40,13 +40,6 @@ struct ChordButtonsView: View {
         var image:Image
     }
     
-    struct PulseButtonStyle: ButtonStyle {
-        func makeBody(configuration: Self.Configuration) -> some View {
-            configuration.label
-                .scaleEffect(configuration.isPressed ? 1.3 : 1.0)
-        }
-    }
-    
     struct PickView: View {
         @EnvironmentObject var model: iJamGuitarModel
         @State private var isAnimated: Bool = false
@@ -70,7 +63,7 @@ struct ChordButtonsView: View {
         }
         
         func getPickButton() -> some View {
-           return Button(action: {
+           let button =  Button(action: {
                 if model.selectedChordIndex != pick.id {
                     withAnimation(.default) {
                         isAnimated.toggle()
@@ -86,10 +79,13 @@ struct ChordButtonsView: View {
                     .opacity(self.pick.title == kNoChordName ? 0.3 : 1.0)
                     .disabled(self.pick.title == kNoChordName)
             }
+            
+            return button
         }
         
+        // returns approprieate imageName for pickButton or "BlankPick" on failure
         func getPickImageName() -> String {
-            var pickImageName = ""
+            var pickImageName = "BlankPick"
             if model.selectedChordIndex == self.pick.id {
                 let thisChord = model.availableChords[self.pick.id]
                 pickImageName =  model.fretIndexMap != model.getFretIndexMap(chord: thisChord) ? "ModifiedPick" : "ActivePick"
@@ -100,7 +96,7 @@ struct ChordButtonsView: View {
             return pickImageName
         }
         
-        /// sets vm.activeChord and vm.selectedIndex
+        /// sets model.activeChord and model.selectedIndex
         func setNewActiveChord() {
             if let chordNames = model.activeChordGroup?.availableChordNames?.components(separatedBy: ["-"]) {
                 if self.pick.id < chordNames.count {
@@ -124,14 +120,6 @@ struct ChordButtonsView: View {
             case 4, 5:  return UIDevice.current.userInterfaceIdiom == .pad ? 18.0 : 14.0
             default:    return UIDevice.current.userInterfaceIdiom == .pad ? 14.0 : 10.0
             }
-        }
-
-        func getPickTitle(name:String?) -> String {
-            if let title = name {
-                return title
-            }
-                
-            return ""
         }
     }
 }

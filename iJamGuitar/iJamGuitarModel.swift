@@ -10,6 +10,8 @@ import CoreData
 import AVFAudio
 
 class iJamGuitarModel: ObservableObject {
+    @Published var showAudioPlayerInUseAlert = false
+    @Published var showAudioPlayerErrorAlert = false
     @Published var appState: AppState?
     @Published var activeTuning: Tuning?
     @Published var capoPosition: Int = 0
@@ -44,7 +46,7 @@ class iJamGuitarModel: ObservableObject {
             minimumFret = getinimumDisplayedFret()
         }
     }
-
+    
     let context = PersistenceController.shared.container.viewContext
     let kDefaultVolume = 5.0
 

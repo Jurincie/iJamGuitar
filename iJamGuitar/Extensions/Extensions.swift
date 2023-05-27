@@ -9,43 +9,31 @@ import Foundation
 import CoreData
 import SwiftUI
 
-extension NSDictionary {
-    var swiftDictionary: Dictionary<String, Any> {
-        var swiftDictionary = Dictionary<String, Any>()
-        for key : Any in self.allKeys {
-            if let stringKey = key as? String,
-               let keyValue = self.value(forKey: stringKey) {
-                swiftDictionary[stringKey] = keyValue
-            }
-        }
-
-        return swiftDictionary
-    }
-}
-
-extension String {
-    subscript(i: Int) -> String {
-        return String(self[index(startIndex, offsetBy: i)])
-    }
-}
-
 extension StringView {
+    func getFretBoxArray(minFret: Int, openStringNote: String) -> [FretBox] {
+        var fretBoxArray:[FretBox] = []
+        fretBoxArray.append(FretBox(id: 0, title: model.fretIndexMap[6 - stringNumber] == -1 ?
+                                    "X" : getFretNoteTitle(openNote: openStringNote, offset: 0)))
+        for index in Range(0...4) {
+            fretBoxArray.append(FretBox(id: minFret + index, title: getFretNoteTitle(openNote: openStringNote, offset: index + minFret)))
+        }
+        return fretBoxArray
+    }
+    
     func getFretNoteTitle(openNote:String, offset:Int) -> String {
         if let index = self.notes.firstIndex(of: openNote) {
             var finalIndex = index + offset + model.capoPosition
             if finalIndex < 0 {
                 finalIndex += 12
             }
-            
             return self.notes[finalIndex % 12]
         }
-        
         return "C"
     }
 }
 
 extension View {
-  func readFrame(onChange: @escaping (CGRect) -> Void) -> some View {
+  func readFrame(onChange: @escaping (CGRect) -> ()) -> some View {
     background(
       GeometryReader { geometryProxy in
         Color.clear

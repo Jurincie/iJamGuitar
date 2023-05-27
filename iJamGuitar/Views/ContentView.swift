@@ -12,6 +12,7 @@ struct ContentView: View {
     
     @StateObject var model = iJamGuitarModel()
     var x = 0.0
+    
     var body: some View {
         GeometryReader { geo in
             let height      = geo.size.height

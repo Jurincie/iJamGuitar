@@ -19,21 +19,20 @@ struct StringsAndFretsAreaView : View {
     
     var body: some View {
         ZStack() {
-            // 1st layer
+            // BOTTOM layer
             VStack(spacing:0) {
-                // display fretBoard in Top half
-                // display StringAreaView in Bottom half
+                // display frets in Top half
                 HStack(spacing:0) {
                     FretNumbersView(width: width * 0.12, height: height / 2)
                     FretBoardView(width: width * 0.76, height: height / 2)
                     FretNumbersView(width: width * 0.12, height: height / 2)
                 }
-                
+                // display StringAreaView in Bottom half
                 Image("StringAreaView")
                     .resizable()
                     .frame(width: width, height: height / 2, alignment: .top)
             }
-            // 2nd layer
+            // TOP layer
             // Notice that height covers both the above
             StringsView(height: height)
         }
