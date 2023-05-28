@@ -11,7 +11,7 @@ struct ChordButtonsView: View {
     @EnvironmentObject var iJamGuitarMoodel: iJamGuitarModel
     var width:CGFloat = 0.0
     var height:CGFloat = 0.0
-    let mySpacing:CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 36.0 : 12.0
+    let mySpacing:CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 18.0 : 12.0
     private let columns = Array(repeating: GridItem(.flexible()), count: 5)
     private var activeButtonId: Int = -1
     
@@ -59,7 +59,6 @@ struct ChordButtonsView: View {
             }
             .cornerRadius(10.0)
             .rotationEffect(Angle(degrees: self.pick.title == kNoChordName ? 0 : isAnimated ? 360 : 0))
-            .shadow(color: Color.white, radius: 20.0)
         }
         
         func getPickButton() -> some View {

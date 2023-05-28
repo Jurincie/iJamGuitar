@@ -10,6 +10,8 @@ import CoreData
 import AVFAudio
 
 class iJamGuitarModel: ObservableObject {
+    let context = PersistenceController.shared.container.viewContext
+    let kDefaultVolume = 5.0
     @Published var showAudioPlayerInUseAlert = false
     @Published var showAudioPlayerErrorAlert = false
     @Published var appState: AppState?
@@ -47,9 +49,6 @@ class iJamGuitarModel: ObservableObject {
         }
     }
     
-    let context = PersistenceController.shared.container.viewContext
-    let kDefaultVolume = 5.0
-
     init() {
         // ONLY BUILD the dataModel from .plists once, on intial launch
         let request = NSFetchRequest<AppState>(entityName: "AppState")
@@ -73,7 +72,6 @@ class iJamGuitarModel: ObservableObject {
             
             // if another app is using AudioPlayer -> show alert
             showAudioNotAvailableAlert = AVAudioSession.sharedInstance().isOtherAudioPlaying
-            
         } catch {
             let error = error as NSError
             debugPrint("Error getting AppState \(error)")

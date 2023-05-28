@@ -32,7 +32,7 @@ import SwiftUI
 ///
 struct StringsView: View {
     @EnvironmentObject var model: iJamGuitarModel
-    let stringsVM = iJamAudioManager()
+    let audioManager = iJamAudioManager()
     @State var dragLocation: CGPoint?
     @State private var presentVolumeAlert = false
     var height: CGFloat = 0.0
@@ -40,18 +40,15 @@ struct StringsView: View {
     let kNoFret = -1
 
     var body: some View {
-        let tap = TapGesture().onEnded { stringsVM.formerZone = -1 }
-            .onEnded({ location in
-                print("Tapped at \(location)")
-            })
-        
-         let drag = DragGesture(minimumDistance: 0).onChanged { drag in
+        let drag = DragGesture(minimumDistance: 0)
+            .onEnded { _ in audioManager.formerZone = -1 }
+            .onChanged { drag in
             dragLocation = drag.location
             guard let location = dragLocation else { return }
             debugPrint("====> DragLocation: \(location)")
             
-            let zone = stringsVM.getZone(loc: location)
-            guard zone != stringsVM.formerZone else { return }
+            let zone = audioManager.getZone(loc: location)
+            guard zone != audioManager.formerZone else { return }
             debugPrint("====> In New Zone: \(zone)")
            
             if zone % 2 == 0 && model.appState?.isMuted == false {
@@ -60,45 +57,45 @@ struct StringsView: View {
                     presentVolumeAlert = true
                 }
                 
-                let stringToPlay: Int = stringsVM.stringNumberToPlay(zone: zone, oldZone: stringsVM.formerZone)
+                let stringToPlay: Int = audioManager.stringNumberToPlay(zone: zone, oldZone: audioManager.formerZone)
                 guard stringToPlay > 0 && stringToPlay < 7 else { return }
-                
                 pickString(stringToPlay)
             }
-            stringsVM.formerZone = zone
-        }.sequenced(before: tap)
+            audioManager.formerZone = zone
+        }
 
         HStack() {
             SixSpacerHStack()
             HStack(spacing:0) {
                 StringView(height:height, stringNumber: 6, fretNumber: model.fretIndexMap[0]) .readFrame { newFrame in
-                    stringsVM.zoneBreaks[0] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
+                    audioManager.zoneBreaks[0] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
                 }
                 Spacer()
                 StringView(height:height, stringNumber: 5, fretNumber: model.fretIndexMap[1]) .readFrame { newFrame in
-                    stringsVM.zoneBreaks[1] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
+                    audioManager.zoneBreaks[1] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
                 }
                 Spacer()
                 StringView(height:height, stringNumber: 4, fretNumber: model.fretIndexMap[2]) .readFrame { newFrame in
-                    stringsVM.zoneBreaks[2] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
+                    audioManager.zoneBreaks[2] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
                 }
             }
             HStack() {
                 Spacer()
                 StringView(height:height, stringNumber: 3, fretNumber: model.fretIndexMap[3]) .readFrame { newFrame in
-                    stringsVM.zoneBreaks[3] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
+                    audioManager.zoneBreaks[3] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
                 }
                 Spacer()
                 StringView(height:height, stringNumber: 2, fretNumber: model.fretIndexMap[4]) .readFrame { newFrame in
-                    stringsVM.zoneBreaks[4] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
+                    audioManager.zoneBreaks[4] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
                 }
                 Spacer()
                 StringView(height:height, stringNumber: 1, fretNumber: model.fretIndexMap[5]).readFrame { newFrame in
-                    stringsVM.zoneBreaks[5] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
+                    audioManager.zoneBreaks[5] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
                 }
             }
             SixSpacerHStack()
         }
+        .task({await playOpeningArpegio()})
         .gesture(drag)
             .alert("Master Volume is OFF", isPresented: $presentVolumeAlert) {
                 Button("OK", role: .cancel) { presentVolumeAlert = false }
@@ -111,16 +108,23 @@ struct StringsView: View {
             }
     }
     
+    func playOpeningArpegio() async {
+        for string in 0...5 {
+            pickString(6 - string)
+            try? await Task.sleep(nanoseconds: 200_000_000)
+        }
+    }
+    
     func pickString(_ stringToPlay: Int) {
         let openNotes = model.appState?.activeTuning?.openNoteIndices?.components(separatedBy: "-")
         let fretPosition = model.fretIndexMap[6 - stringToPlay]
-        if fretPosition > kNoFret {
+        if fretPosition > -1 {
             if let noteIndices = openNotes, let thisStringsOpenIndex = Int(noteIndices[6 - stringToPlay]) {
                 let index               = fretPosition + thisStringsOpenIndex + model.capoPosition
-                let noteToPlayName      = stringsVM.noteNamesArray[index]
+                let noteToPlayName      = audioManager.noteNamesArray[index]
                 let volume              = model.appState?.volumeLevel?.doubleValue  ?? 0.0
 
-                stringsVM.playWaveFile(noteName:noteToPlayName,
+                audioManager.playWaveFile(noteName:noteToPlayName,
                                        stringNumber: stringToPlay,
                                        volume: volume / 10.0)
             }

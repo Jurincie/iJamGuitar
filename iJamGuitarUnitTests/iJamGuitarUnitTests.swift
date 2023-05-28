@@ -13,7 +13,7 @@ import AVFAudio
 
 final class iJamViewModelTests: XCTestCase {
     // Given
-    let stringsVM = iJamAudioManager()
+    let audioManager = iJamAudioManager()
     let model = iJamGuitarModel()
     let tooBig = 20
 
@@ -34,7 +34,7 @@ final class iJamViewModelTests: XCTestCase {
     }
    
     func test_iJamAudioManager_noteNamesArray_shouldHaveFortyTwoElements() {
-        XCTAssertEqual(stringsVM.noteNamesArray.count, 42)
+        XCTAssertEqual(audioManager.noteNamesArray.count, 42)
     }
     
     func test_iJamGuitarModel_Tunings_ChordsMeetRequirements() {
@@ -56,7 +56,7 @@ final class iJamViewModelTests: XCTestCase {
         
     func test_iJamAudioManager_formerZone_shouldInitializeToNegativeOne () {
         // When
-        let zone = stringsVM.formerZone
+        let zone = audioManager.formerZone
         
         // Then
         XCTAssertEqual(zone, -1)
@@ -64,21 +64,21 @@ final class iJamViewModelTests: XCTestCase {
     
     func test_iJamAudioManager_audioPlayerArray_ShouldHaveSixAudioPlayers() {
         // When
-        XCTAssertNotNil(stringsVM.audioPlayerArray)
-        XCTAssertEqual(stringsVM.audioPlayerArray.count, 6)
+        XCTAssertNotNil(audioManager.audioPlayerArray)
+        XCTAssertEqual(audioManager.audioPlayerArray.count, 6)
         
         // Then
         var thisAudioPlayer: AVAudioPlayer?
         
         for _ in 0...30 {
-            thisAudioPlayer = stringsVM.audioPlayerArray[Int.random(in: 0..<6)]
+            thisAudioPlayer = audioManager.audioPlayerArray[Int.random(in: 0..<6)]
             XCTAssertTrue(((thisAudioPlayer?.isKind(of: AVAudioPlayer.self)) != nil))
         }
     }
     
     func test_iJamAudioManager_thisZone_shouldInitializeToNegativeOne () {
         // When
-        let zone = stringsVM.formerZone
+        let zone = audioManager.formerZone
 
         // Then
         XCTAssertEqual(zone, -1)
