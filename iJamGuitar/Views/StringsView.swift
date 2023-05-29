@@ -38,9 +38,8 @@ struct StringsView: View {
     var height: CGFloat = 0.0
     let kHalfStringWidh = 5.0
     let kNoFret = -1
-
-    var body: some View {
-        let drag = DragGesture(minimumDistance: 0)
+    var drag: some Gesture {
+        DragGesture()
             .onEnded { _ in audioManager.formerZone = -1 }
             .onChanged { drag in
             dragLocation = drag.location
@@ -59,11 +58,14 @@ struct StringsView: View {
                 
                 let stringToPlay: Int = audioManager.stringNumberToPlay(zone: zone, oldZone: audioManager.formerZone)
                 guard stringToPlay > 0 && stringToPlay < 7 else { return }
+                
                 pickString(stringToPlay)
             }
             audioManager.formerZone = zone
         }
+    }
 
+    var body: some View {
         HStack() {
             SixSpacerHStack()
             HStack(spacing:0) {
@@ -78,8 +80,6 @@ struct StringsView: View {
                 StringView(height:height, stringNumber: 4, fretNumber: model.fretIndexMap[2]) .readFrame { newFrame in
                     audioManager.zoneBreaks[2] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
                 }
-            }
-            HStack() {
                 Spacer()
                 StringView(height:height, stringNumber: 3, fretNumber: model.fretIndexMap[3]) .readFrame { newFrame in
                     audioManager.zoneBreaks[3] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
@@ -89,6 +89,8 @@ struct StringsView: View {
                     audioManager.zoneBreaks[4] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
                 }
                 Spacer()
+            }
+            HStack() {
                 StringView(height:height, stringNumber: 1, fretNumber: model.fretIndexMap[5]).readFrame { newFrame in
                     audioManager.zoneBreaks[5] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
                 }
@@ -96,6 +98,7 @@ struct StringsView: View {
             SixSpacerHStack()
         }
         .task({await playOpeningArpegio()})
+        .contentShape(Rectangle())
         .gesture(drag)
             .alert("Master Volume is OFF", isPresented: $presentVolumeAlert) {
                 Button("OK", role: .cancel) { presentVolumeAlert = false }
@@ -111,14 +114,14 @@ struct StringsView: View {
     func playOpeningArpegio() async {
         for string in 0...5 {
             pickString(6 - string)
-            try? await Task.sleep(nanoseconds: 200_000_000)
+            try? await Task.sleep(nanoseconds: 0_500_000_000)
         }
     }
     
     func pickString(_ stringToPlay: Int) {
         let openNotes = model.appState?.activeTuning?.openNoteIndices?.components(separatedBy: "-")
         let fretPosition = model.fretIndexMap[6 - stringToPlay]
-        if fretPosition > -1 {
+        if fretPosition > kNoFret {
             if let noteIndices = openNotes, let thisStringsOpenIndex = Int(noteIndices[6 - stringToPlay]) {
                 let index               = fretPosition + thisStringsOpenIndex + model.capoPosition
                 let noteToPlayName      = audioManager.noteNamesArray[index]
