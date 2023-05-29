@@ -106,7 +106,7 @@ struct StringsView: View {
             .alert("Another app is using the Audio Player", isPresented: $model.showAudioPlayerInUseAlert) {
                 Button("OK", role: .cancel) { model.showAudioPlayerInUseAlert = false }
             }
-            .alert("Audio Player Error", isPresented: $model.showAudioPlayerErrorAlert) {
+            .alert("Unknown Audio Player Error", isPresented: $model.showAudioPlayerErrorAlert) {
                 Button("OK", role: .cancel) { fatalError() }
             }
     }
