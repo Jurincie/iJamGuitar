@@ -11,7 +11,7 @@ import CoreData
 @main
 struct iJamGuitarApp: App {
     let persistenceController = PersistenceController.shared
-    let model = iJamGuitarModel()
+//    let model = iJamGuitarModel()
 
     var body: some Scene {
         WindowGroup {

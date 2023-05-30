@@ -34,34 +34,14 @@ struct StringsView: View {
     @EnvironmentObject var model: iJamGuitarModel
     let audioManager = iJamAudioManager()
     @State var dragLocation: CGPoint?
-    @State private var presentVolumeAlert = false
     var height: CGFloat = 0.0
     let kHalfStringWidh = 5.0
-    let kNoFret = -1
     var drag: some Gesture {
         DragGesture()
             .onEnded { _ in audioManager.formerZone = -1 }
             .onChanged { drag in
             dragLocation = drag.location
-            guard let location = dragLocation else { return }
-            debugPrint("====> DragLocation: \(location)")
-            
-            let zone = audioManager.getZone(loc: location)
-            guard zone != audioManager.formerZone else { return }
-            debugPrint("====> In New Zone: \(zone)")
-           
-            if zone % 2 == 0 && model.appState?.isMuted == false {
-                if(AVAudioSession.sharedInstance().outputVolume == 0.0) {
-                    // Alert user that their volume is off
-                    presentVolumeAlert = true
-                }
-                
-                let stringToPlay: Int = audioManager.stringNumberToPlay(zone: zone, oldZone: audioManager.formerZone)
-                guard stringToPlay > 0 && stringToPlay < 7 else { return }
-                
-                pickString(stringToPlay)
-            }
-            audioManager.formerZone = zone
+                audioManager.newDragLocation(dragLocation)
         }
     }
 
@@ -100,8 +80,8 @@ struct StringsView: View {
         .task({await playOpeningArpegio()})
         .contentShape(Rectangle())
         .gesture(drag)
-            .alert("Master Volume is OFF", isPresented: $presentVolumeAlert) {
-                Button("OK", role: .cancel) { presentVolumeAlert = false }
+        .alert("Master Volume is OFF", isPresented: $model.presentVolumeAlert) {
+            Button("OK", role: .cancel) { model.presentVolumeAlert = false }
             }
             .alert("Another app is using the Audio Player", isPresented: $model.showAudioPlayerInUseAlert) {
                 Button("OK", role: .cancel) { model.showAudioPlayerInUseAlert = false }
@@ -113,24 +93,8 @@ struct StringsView: View {
     
     func playOpeningArpegio() async {
         for string in 0...5 {
-            pickString(6 - string)
+            audioManager.pickString(6 - string)
             try? await Task.sleep(nanoseconds: 0_500_000_000)
-        }
-    }
-    
-    func pickString(_ stringToPlay: Int) {
-        let openNotes = model.appState?.activeTuning?.openNoteIndices?.components(separatedBy: "-")
-        let fretPosition = model.fretIndexMap[6 - stringToPlay]
-        if fretPosition > kNoFret {
-            if let noteIndices = openNotes, let thisStringsOpenIndex = Int(noteIndices[6 - stringToPlay]) {
-                let index               = fretPosition + thisStringsOpenIndex + model.capoPosition
-                let noteToPlayName      = audioManager.noteNamesArray[index]
-                let volume              = model.appState?.volumeLevel?.doubleValue  ?? 0.0
-
-                audioManager.playWaveFile(noteName:noteToPlayName,
-                                       stringNumber: stringToPlay,
-                                       volume: volume / 10.0)
-            }
         }
     }
 

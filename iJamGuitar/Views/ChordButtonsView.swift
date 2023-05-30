@@ -50,7 +50,7 @@ struct ChordButtonsView: View {
         var body: some View {
             ZStack() {
                 // background layer
-                getPickButton()
+                PickButton()
                 
                 // front layer
                 Text(self.pick.title == kNoChordName ? "" : self.pick.title)
@@ -61,13 +61,13 @@ struct ChordButtonsView: View {
             .rotationEffect(Angle(degrees: self.pick.title == kNoChordName ? 0 : isAnimated ? 360 : 0))
         }
         
-        func getPickButton() -> some View {
+        func PickButton() -> some View {
            let button =  Button(action: {
-                if model.selectedChordIndex != pick.id {
+               if model.selectedChordIndex != pick.id || chordIsAltered(pick.id) {
                     withAnimation(.default) {
                         isAnimated.toggle()
                     }
-                    setNewActiveChord()
+                    setNewChord()
                 }
             }){
                 Image(getPickImageName())
@@ -95,17 +95,22 @@ struct ChordButtonsView: View {
             return pickImageName
         }
         
+        func chordIsAltered(_ chordIndex: Int) -> Bool {
+            let thisChord = model.availableChords[chordIndex]
+            return model.fretIndexMap != model.getFretIndexMap(chord: thisChord)
+        }
+        
         /// sets model.activeChord and model.selectedIndex
-        func setNewActiveChord() {
+        func setNewChord() {
             if let chordNames = model.activeChordGroup?.availableChordNames?.components(separatedBy: ["-"]) {
-                if self.pick.id < chordNames.count {
-                    let newActiveChordName = chordNames[self.pick.id]
-                    if let newActiveChord = model.getChord(name: newActiveChordName, tuning: model.activeTuning) {
-                        model.activeChord = newActiveChord
-                        model.selectedChordIndex = self.pick.id
-                    }
-                    try? model.context.save()
+                guard self.pick.id < chordNames.count else { return }
+                
+                let newActiveChordName = chordNames[self.pick.id]
+                if let newActiveChord = model.getChord(name: newActiveChordName, tuning: model.activeTuning) {
+                    model.activeChord = newActiveChord
+                    model.selectedChordIndex = self.pick.id
                 }
+                try? model.context.save()
                 isAnimated.toggle()
             }
         }

@@ -22,7 +22,8 @@ struct FramePreferenceKey: PreferenceKey {
 }
 
 class iJamAudioManager {
-    @EnvironmentObject var model: iJamGuitarModel
+    @State var model = iJamGuitarModel()
+    let kNoFret = -1
     let kHalfStringWidth    = 5.0
     var formerZone          = -1
     var zoneBreaks:[Double] = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
@@ -64,29 +65,6 @@ class iJamAudioManager {
         }
     }
     
-    func playWaveFile(noteName: String,
-                      stringNumber: Int,
-                      volume: Double) {
-        let prefix = String(noteName.prefix(noteName.count - 4))  // trims ".wav" from end
-        debugPrint("====> playing String: \(stringNumber) note: \(noteName)")
-        if let asset = NSDataAsset(name:prefix) {
-            do {
-                let thisAudioPlayer                 = try AVAudioPlayer(data:asset.data, fileTypeHint:"wav")
-                audioPlayerArray[6 - stringNumber]  = thisAudioPlayer
-                thisAudioPlayer.volume              = Float(volume) / 3.0
-                
-                thisAudioPlayer.prepareToPlay()
-                thisAudioPlayer.play()
-            }
-            catch InitializeErrors.AVAudioSessionError{
-                model.showAudioPlayerErrorAlert = true
-            }
-            catch {
-                model.showAudioPlayerErrorAlert = true
-            }
-        }
-    }
-   
     func getZone(loc: CGPoint) -> Int{
         // ZoneBreaks[n] is leftmost position of string[6-n]
         var zone = 0
@@ -127,4 +105,68 @@ class iJamAudioManager {
         let stringNumber = (6 - (zone / 2))
         return oldZone < zone && zone != 0 ? stringNumber + 1 : stringNumber
     }
+    
+    func newDragLocation(_ location: CGPoint?) {
+        guard let location =  location else { return }
+        debugPrint("====> DragLocation: \(location)")
+        let zone = getZone(loc: location)
+        guard zone != formerZone else { return }
+        debugPrint("====> In New Zone: \(zone)")
+        
+        // should we play a note?
+        let stringToPlay: Int = stringNumberToPlay(zone: zone, oldZone: formerZone)
+        if shouldPickString(zone: zone, stringNumber: stringToPlay) {
+            pickString(stringToPlay)
+        }
+        
+        formerZone = zone
+    }
+    
+    func shouldPickString(zone: Int, stringNumber: Int) -> Bool {
+        var answer = false
+        if zone % 2 == 0 && model.appState?.isMuted == false {
+            answer =  stringNumber > 0 && stringNumber < 7
+        }
+        return answer
+    }
+    
+    func pickString(_ stringToPlay: Int) {
+        let openNotes = model.appState?.activeTuning?.openNoteIndices?.components(separatedBy: "-")
+        let fretPosition = model.fretIndexMap[6 - stringToPlay]
+        if fretPosition > kNoFret {
+            if let noteIndices = openNotes, let thisStringsOpenIndex = Int(noteIndices[6 - stringToPlay]) {
+                let index               = fretPosition + thisStringsOpenIndex + model.capoPosition
+                let noteToPlayName      = noteNamesArray[index]
+                let volume              = model.appState?.volumeLevel?.doubleValue  ?? 0.0
+
+                playWaveFile(noteName:noteToPlayName,
+                             stringNumber: stringToPlay,
+                             volume: volume / 10.0)
+            }
+        }
+    }
+    
+    func playWaveFile(noteName: String,
+                      stringNumber: Int,
+                      volume: Double) {
+        let prefix = String(noteName.prefix(noteName.count - 4))  // trims ".wav" from end
+        debugPrint("----> playing String: \(stringNumber) note: \(noteName)")
+        if let asset = NSDataAsset(name:prefix) {
+            do {
+                let thisAudioPlayer                 = try AVAudioPlayer(data:asset.data, fileTypeHint:"wav")
+                audioPlayerArray[6 - stringNumber]  = thisAudioPlayer
+                thisAudioPlayer.volume              = Float(volume) / 3.0
+                
+                thisAudioPlayer.prepareToPlay()
+                thisAudioPlayer.play()
+            }
+            catch InitializeErrors.AVAudioSessionError{
+                model.showAudioPlayerErrorAlert = true
+            }
+            catch {
+                model.showAudioPlayerErrorAlert = true
+            }
+        }
+    }
+   
 }

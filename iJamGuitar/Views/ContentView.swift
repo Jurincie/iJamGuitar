@@ -9,7 +9,6 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    
     @StateObject var model = iJamGuitarModel()
     var x = 0.0
     

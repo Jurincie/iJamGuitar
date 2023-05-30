@@ -12,6 +12,7 @@ import AVFAudio
 class iJamGuitarModel: ObservableObject {
     let context = PersistenceController.shared.container.viewContext
     let kDefaultVolume = 5.0
+    @Published var presentVolumeAlert = false
     @Published var showAudioPlayerInUseAlert = false
     @Published var showAudioPlayerErrorAlert = false
     @Published var appState: AppState?
@@ -49,26 +50,19 @@ class iJamGuitarModel: ObservableObject {
         }
     }
     
+    static let shared = iJamGuitarModel()
+    
+    ///  ONLY Call LoadDatatModelFromPLists to build our data model, on initial launch
     init() {
-        // ONLY BUILD the dataModel from .plists once, on intial launch
         let request = NSFetchRequest<AppState>(entityName: "AppState")
         do {
             let appStates: [AppState] = try context.fetch(request)
             appState = appStates.first
             if appState == nil {
-                loadDataModelFromPListsIntoPersistentStore()
+                loadDataModelFromPLists()
             }
             
-            availableChords = getAvailableChords(activeChordGroup: appState?.activeTuning?.activeChordGroup,
-                                                 activeTuning: appState?.activeTuning)
-            fretIndexMap = getFretIndexMap(chord: appState?.activeTuning?.activeChordGroup?.activeChord)
-            selectedChordIndex = getSelectedChordIndex()
-            // these are convenience properties
-            activeTuning            = appState?.activeTuning
-            activeTuningName        = activeTuning?.name ?? ""
-            activeChordGroup        = activeTuning?.activeChordGroup
-            activeChordGroupName    = activeChordGroup?.name ?? ""
-            activeChord             = activeChordGroup?.activeChord
+            setupModel()
             
             // if another app is using AudioPlayer -> show alert
             showAudioNotAvailableAlert = AVAudioSession.sharedInstance().isOtherAudioPlaying
@@ -77,6 +71,19 @@ class iJamGuitarModel: ObservableObject {
             debugPrint("Error getting AppState \(error)")
             fatalError()
         }
+    }
+    
+    private func setupModel() {
+        availableChords = getAvailableChords(activeChordGroup: appState?.activeTuning?.activeChordGroup,
+                                             activeTuning: appState?.activeTuning)
+        fretIndexMap = getFretIndexMap(chord: appState?.activeTuning?.activeChordGroup?.activeChord)
+        selectedChordIndex = getSelectedChordIndex()
+        // these are convenience properties
+        activeTuning            = appState?.activeTuning
+        activeTuningName        = activeTuning?.name ?? ""
+        activeChordGroup        = activeTuning?.activeChordGroup
+        activeChordGroupName    = activeChordGroup?.name ?? ""
+        activeChord             = activeChordGroup?.activeChord
     }
     
     func getSelectedChordIndex() -> Int {
@@ -138,7 +145,7 @@ class iJamGuitarModel: ObservableObject {
     /// activeTuning
     /// eachTunings activeChordGroup
     /// each chordGroups activeChord
-    func loadDataModelFromPListsIntoPersistentStore() {
+    func loadDataModelFromPLists() {
         // populate our initial dataModel from Plists
         let appState = AppState(context: context)
 
