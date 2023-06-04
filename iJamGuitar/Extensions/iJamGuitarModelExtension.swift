@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension iJamGuitarModel
+extension iJamModel
 {
     /// This method takes a name associated with appState.Tunings names
     /// and returns an associated Tuning if able, otherwise is return nil
@@ -33,8 +33,7 @@ extension iJamGuitarModel
     /// ///activeTuning,  appState?.activeTUNINGm activeChordGroup and appState?.activeChordGroup, activeChordGroupNamem availableChords
     /// /// fretIndexMap and selectedIndex based on the activeChord for this Tuning
     /// /// We save new appState members here
-    /// /// Warning:Must set activeChordGroup prior to setting activeChordGroupName
-    ///
+    /// /// Warning: Must set activeChordGroup prior to setting activeChordGroupName
     func setNewActiveTuning(newTuning: Tuning) {
         // set activeTuning in model and dataModel
         activeTuning = newTuning

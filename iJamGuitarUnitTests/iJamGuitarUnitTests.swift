@@ -14,7 +14,7 @@ import AVFAudio
 final class iJamViewModelTests: XCTestCase {
     // Given
     let audioManager = iJamAudioManager()
-    let model = iJamGuitarModel()
+    let model = iJamModel()
     let tooBig = 20
 
     override func setUpWithError() throws {
@@ -37,7 +37,7 @@ final class iJamViewModelTests: XCTestCase {
         XCTAssertEqual(audioManager.noteNamesArray.count, 42)
     }
     
-    func test_iJamGuitarModel_Tunings_ChordsMeetRequirements() {
+    func test_iJamModel_Tunings_ChordsMeetRequirements() {
         
         if let allTunings = model.appState?.tunings {
             if let tunings = Array(allTunings) as? [Tuning] {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TuningPickerView: View {
    
-    @EnvironmentObject var model: iJamGuitarModel
+    @EnvironmentObject var model: iJamModel
 
     var body: some View {
        VStack {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FretNumbersView: View {
-    @EnvironmentObject var model: iJamGuitarModel
+    @EnvironmentObject var model: iJamModel
     var width:CGFloat = 0.0
     var height:CGFloat = 0.0
      

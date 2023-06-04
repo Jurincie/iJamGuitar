@@ -10,14 +10,16 @@ import CoreData
 
 @main
 struct iJamGuitarApp: App {
+    @Environment(\.scenePhase) var scenePhase
     let persistenceController = PersistenceController.shared
-//    let model = iJamGuitarModel()
 
     var body: some Scene {
         WindowGroup {
-            // inject the view context into the ContentView and all its offspring
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+        }
+        .onChange(of: scenePhase) { _ in
+            persistenceController.save()
         }
     }
 }

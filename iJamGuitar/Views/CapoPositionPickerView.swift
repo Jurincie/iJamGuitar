@@ -8,21 +8,9 @@
 import SwiftUI
 
 struct CapoPositionPickerView: View {
-    @EnvironmentObject var model: iJamGuitarModel
-    
+    @EnvironmentObject var model: iJamModel
     let frets = Range(-2...5)
     let kLabelWidth = 40.0
-    
-    func getCapoLabel() -> some View {
-        return Text("\(model.capoPosition)")
-            .font(UIDevice.current.userInterfaceIdiom == .pad ? .title2 : .caption)
-            .fontWeight(.semibold)
-            .padding()
-            .background(Color.clear)
-            .foregroundColor(Color.white)
-            .cornerRadius(4.0)
-            .shadow(color: .white , radius: 2.0)
-    }
 
     var body: some View {
         VStack {
@@ -37,5 +25,16 @@ struct CapoPositionPickerView: View {
                getCapoLabel()
            }
        }
+    }
+    
+    func getCapoLabel() -> some View {
+        return Text("\(model.capoPosition)")
+            .font(UIDevice.current.userInterfaceIdiom == .pad ? .title2 : .caption)
+            .fontWeight(.semibold)
+            .padding()
+            .background(Color.clear)
+            .foregroundColor(Color.white)
+            .cornerRadius(4.0)
+            .shadow(color: .white , radius: 2.0)
     }
 }

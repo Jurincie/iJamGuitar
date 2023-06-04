@@ -22,7 +22,8 @@ struct FramePreferenceKey: PreferenceKey {
 }
 
 class iJamAudioManager {
-    @State var model = iJamGuitarModel()
+    let context = PersistenceController.shared.container.viewContext
+    var model:iJamModel = iJamModel.shared
     let kNoFret = -1
     let kHalfStringWidth    = 5.0
     var formerZone          = -1
@@ -131,7 +132,7 @@ class iJamAudioManager {
     }
     
     func pickString(_ stringToPlay: Int) {
-        let openNotes = model.appState?.activeTuning?.openNoteIndices?.components(separatedBy: "-")
+        let openNotes = model.activeTuning?.openNoteIndices?.components(separatedBy: "-")
         let fretPosition = model.fretIndexMap[6 - stringToPlay]
         if fretPosition > kNoFret {
             if let noteIndices = openNotes, let thisStringsOpenIndex = Int(noteIndices[6 - stringToPlay]) {

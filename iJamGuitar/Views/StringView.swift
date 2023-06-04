@@ -13,7 +13,7 @@ import SwiftUI
 //  top layer:  VStack() of 6 possibly-RedBall images evenly spaced over top half of the stringsView
 
 struct StringView: View {
-    @EnvironmentObject var model: iJamGuitarModel
+    @EnvironmentObject var model: iJamModel
     let notes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
     var height: CGFloat
     var stringImageName: String
@@ -61,9 +61,10 @@ struct StringView: View {
     }
     
     struct FretBoxView: View {
+        @EnvironmentObject var model: iJamModel
         var fretBox: FretBox
         var stringNumber: Int
-        @EnvironmentObject var model: iJamGuitarModel
+        let context = PersistenceController.shared.container.viewContext
 
         var body: some View {
             let minFret = model.minimumFret
@@ -82,7 +83,7 @@ struct StringView: View {
                         // tap this fret
                         model.fretIndexMap[6 - stringNumber] = fretBox.id
                     }
-                    try? model.context.save()
+                    try? context.save()
                 }){
                     if(self.fretBox.id == 0)
                     {

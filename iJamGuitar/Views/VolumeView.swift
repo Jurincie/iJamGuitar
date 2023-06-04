@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct VolumeView: View {
-    @EnvironmentObject var model: iJamGuitarModel
+    @EnvironmentObject var model: iJamModel
+    let context = PersistenceController.shared.container.viewContext
     @State private var isEditing = false
     var imageWidth = UIDevice.current.userInterfaceIdiom == .pad ? 35.0 : 25.0
     
@@ -20,7 +21,7 @@ struct VolumeView: View {
                 isEditing = editing
                 if isEditing == false {
                     model.appState?.volumeLevel = NSDecimalNumber(value: model.volumeLevel)
-                    try? model.context.save()
+                    try? context.save()
                 }
             })
     }
@@ -43,7 +44,7 @@ struct VolumeView: View {
                 Button(action: {
                     model.isMuted.toggle()
                     updateIsMuted()
-                    try? model.context.save()
+                    try? context.save()
                 }) {
                     SpeakerImage()
                 }

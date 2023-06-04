@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ChordButtonsView: View {
-    @EnvironmentObject var iJamGuitarMoodel: iJamGuitarModel
+    @EnvironmentObject var model: iJamModel
+    let context = PersistenceController.shared.container.viewContext
     var width:CGFloat = 0.0
     var height:CGFloat = 0.0
     let mySpacing:CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 18.0 : 12.0
@@ -16,7 +17,7 @@ struct ChordButtonsView: View {
     private var activeButtonId: Int = -1
     
     func getPicks() -> [Pick] {
-        let chordNames:[String] = iJamGuitarMoodel.getAvailableChordNames(activeChordGroup: iJamGuitarMoodel.activeChordGroup)
+        let chordNames:[String] = model.getAvailableChordNames(activeChordGroup: model.activeChordGroup)
         var pickArray: [Pick] = []
         
         for index in 0..<10 {
@@ -41,11 +42,12 @@ struct ChordButtonsView: View {
     }
     
     struct PickView: View {
-        @EnvironmentObject var model: iJamGuitarModel
+        @EnvironmentObject var model: iJamModel
         @State private var isAnimated: Bool = false
-        var pick: Pick
+        let context = PersistenceController.shared.container.viewContext
         let noChordArray = [Int](repeating: -1, count: 10)
         let kNoChordName = "NoChord"
+        var pick: Pick
         
         var body: some View {
             ZStack() {
@@ -101,8 +103,7 @@ struct ChordButtonsView: View {
         }
         
         /// sets model.activeChord and model.selectedIndex
-        func setNewChord() {
-            if let chordNames = model.activeChordGroup?.availableChordNames?.components(separatedBy: ["-"]) {
+        func setNewChord() {            if let chordNames = model.activeChordGroup?.availableChordNames?.components(separatedBy: ["-"]) {
                 guard self.pick.id < chordNames.count else { return }
                 
                 let newActiveChordName = chordNames[self.pick.id]
@@ -110,7 +111,12 @@ struct ChordButtonsView: View {
                     model.activeChord = newActiveChord
                     model.selectedChordIndex = self.pick.id
                 }
-                try? model.context.save()
+                do {
+                    try context.save()
+                } catch {
+                    fatalError()
+                }
+                
                 isAnimated.toggle()
             }
         }

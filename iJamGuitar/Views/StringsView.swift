@@ -31,7 +31,7 @@ import SwiftUI
 /// Zone 12: right of String 1
 ///
 struct StringsView: View {
-    @EnvironmentObject var model: iJamGuitarModel
+    @EnvironmentObject var model: iJamModel
     let audioManager = iJamAudioManager()
     @State var dragLocation: CGPoint?
     var height: CGFloat = 0.0

@@ -9,7 +9,7 @@ import SwiftUI
 
 @available(iOS 16.0, *)
 struct ChordGroupPickerView: View {
-    @EnvironmentObject var model: iJamGuitarModel
+    @EnvironmentObject var model: iJamModel
     
     var body: some View {
         VStack {

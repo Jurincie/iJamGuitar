@@ -1,5 +1,5 @@
 //
-//  iJamGuitarModel.swift
+//  iJamModel.swift
 //  iJamGuitar
 //
 //  Created by Ron Jurincie on 4/24/23.
@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 import AVFAudio
 
-class iJamGuitarModel: ObservableObject {
+class iJamModel: ObservableObject {
     let context = PersistenceController.shared.container.viewContext
     let kDefaultVolume = 5.0
     @Published var presentVolumeAlert = false
@@ -50,8 +50,8 @@ class iJamGuitarModel: ObservableObject {
         }
     }
     
-    static let shared = iJamGuitarModel()
-    
+    static let shared = iJamModel()
+        
     ///  ONLY Call LoadDatatModelFromPLists to build our data model, on initial launch
     init() {
         let request = NSFetchRequest<AppState>(entityName: "AppState")
@@ -102,8 +102,8 @@ class iJamGuitarModel: ObservableObject {
     
     /// This method sets all needed values for Tuning identified by tuningName
     /// and adds the new compled Tuning to the appState.
-    /// It should ONLY be callled on the initial launch to build the appState from iJamGuitarModel.xcaDataModel,
-    /// which is then used by iJamGuitarModel.
+    /// It should ONLY be callled on the initial launch to build the appState from iJamDataModel.xcaDataModel,
+    /// which is then used by iJamModel.
     /// - Parameters:
     ///   - appState: appState from .xcaDataModel
     ///   - tuning: tuning from appState
@@ -186,7 +186,7 @@ class iJamGuitarModel: ObservableObject {
         appState.volumeLevel = NSDecimalNumber(value: kDefaultVolume)
         appState.activeTuning = standardTuning
         
-        saveContext(context: context)
+        try? context.save()
     }
     
     /// Creates and returns a NSSet of Chords available to parentTuning
@@ -273,17 +273,5 @@ class iJamGuitarModel: ObservableObject {
         }
         
         return nil
-    }
-}
-
-// MARK: - Save Core Data Context
-func saveContext(context: NSManagedObjectContext) {
-    if context.hasChanges {
-        do {
-            try context.save()
-        } catch {
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.underlyingErrors)")
-        }
     }
 }

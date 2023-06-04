@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7A302E502A1FF21B005864F4 /* iJamGuitarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A302E4F2A1FF21B005864F4 /* iJamGuitarModel.swift */; };
-		7A302E572A1FF27F005864F4 /* iJamGuitarModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7A302E552A1FF27F005864F4 /* iJamGuitarModel.xcdatamodeld */; };
+		7A302E502A1FF21B005864F4 /* iJamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A302E4F2A1FF21B005864F4 /* iJamModel.swift */; };
 		7A302E5B2A218EBA005864F4 /* iJamAudioManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A302E5A2A218EBA005864F4 /* iJamAudioManger.swift */; };
+		7A302E7D2A2D0E62005864F4 /* iJamDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7A302E7B2A2D0E62005864F4 /* iJamDataModel.xcdatamodeld */; };
 		7AA07A262A040F6A00AE87B3 /* iJamGuitarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA07A252A040F6A00AE87B3 /* iJamGuitarApp.swift */; };
 		7AA07A2A2A040F6B00AE87B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7AA07A292A040F6B00AE87B3 /* Assets.xcassets */; };
 		7AA07A2D2A040F6B00AE87B3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7AA07A2C2A040F6B00AE87B3 /* Preview Assets.xcassets */; };
@@ -52,9 +52,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7A302E4F2A1FF21B005864F4 /* iJamGuitarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = iJamGuitarModel.swift; path = iJamGuitar/iJamGuitarModel.swift; sourceTree = SOURCE_ROOT; };
-		7A302E562A1FF27F005864F4 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		7A302E4F2A1FF21B005864F4 /* iJamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = iJamModel.swift; path = iJamGuitar/iJamModel.swift; sourceTree = SOURCE_ROOT; };
 		7A302E5A2A218EBA005864F4 /* iJamAudioManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iJamAudioManger.swift; sourceTree = "<group>"; };
+		7A302E7C2A2D0E62005864F4 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7AA07A222A040F6A00AE87B3 /* iJamGuitar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iJamGuitar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AA07A252A040F6A00AE87B3 /* iJamGuitarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iJamGuitarApp.swift; sourceTree = "<group>"; };
 		7AA07A292A040F6B00AE87B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -138,14 +138,14 @@
 		7AA07A242A040F6A00AE87B3 /* iJamGuitar */ = {
 			isa = PBXGroup;
 			children = (
+				7A302E7B2A2D0E62005864F4 /* iJamDataModel.xcdatamodeld */,
 				7AA07A252A040F6A00AE87B3 /* iJamGuitarApp.swift */,
-				7A302E552A1FF27F005864F4 /* iJamGuitarModel.xcdatamodeld */,
-				7A302E5A2A218EBA005864F4 /* iJamAudioManger.swift */,
-				7A302E4F2A1FF21B005864F4 /* iJamGuitarModel.swift */,
-				7A302E4D2A1FD25B005864F4 /* Extensions */,
-				7AA07A762A0417C800AE87B3 /* AppViews */,
-				7AA07A292A040F6B00AE87B3 /* Assets.xcassets */,
 				7AA07A2E2A040F6B00AE87B3 /* Persistence.swift */,
+				7A302E5A2A218EBA005864F4 /* iJamAudioManger.swift */,
+				7A302E4F2A1FF21B005864F4 /* iJamModel.swift */,
+				7A302E4D2A1FD25B005864F4 /* Extensions */,
+				7AA07A762A0417C800AE87B3 /* Views */,
+				7AA07A292A040F6B00AE87B3 /* Assets.xcassets */,
 				7AA07A2B2A040F6B00AE87B3 /* Preview Content */,
 			);
 			path = iJamGuitar;
@@ -183,14 +183,14 @@
 			path = "Property Lists";
 			sourceTree = "<group>";
 		};
-		7AA07A762A0417C800AE87B3 /* AppViews */ = {
+		7AA07A762A0417C800AE87B3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7AA07A842A0417E800AE87B3 /* ContentView.swift */,
 				7AA07A782A0417E600AE87B3 /* BottomView.swift */,
 				7AA07A822A0417E800AE87B3 /* CapoPositionPickerView.swift */,
 				7AA07A802A0417E700AE87B3 /* ChordButtonsView.swift */,
 				7AA07A7C2A0417E600AE87B3 /* ChordGroupPickerView.swift */,
-				7AA07A842A0417E800AE87B3 /* ContentView.swift */,
 				7AA07A7E2A0417E700AE87B3 /* FretBoardView.swift */,
 				7AA07A7A2A0417E600AE87B3 /* FretNumbersView.swift */,
 				7AA07A7D2A0417E700AE87B3 /* HeaderView.swift */,
@@ -201,7 +201,7 @@
 				7AA07A772A0417E600AE87B3 /* TuningPickerView.swift */,
 				7AA07A7B2A0417E600AE87B3 /* VolumeView.swift */,
 			);
-			path = AppViews;
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,6 +317,7 @@
 				7AA07A8F2A0417E800AE87B3 /* StringsView.swift in Sources */,
 				7AA07A882A0417E800AE87B3 /* FretNumbersView.swift in Sources */,
 				7AA07A8E2A0417E800AE87B3 /* ChordButtonsView.swift in Sources */,
+				7A302E7D2A2D0E62005864F4 /* iJamDataModel.xcdatamodeld in Sources */,
 				7AA07A612A0416EC00AE87B3 /* iJamGuitarModelExtension.swift in Sources */,
 				7AA07A862A0417E800AE87B3 /* BottomView.swift in Sources */,
 				7AA07A8D2A0417E800AE87B3 /* StringsAndFretsAreaView.swift in Sources */,
@@ -328,11 +329,10 @@
 				7A302E5B2A218EBA005864F4 /* iJamAudioManger.swift in Sources */,
 				7AA07A922A0417E800AE87B3 /* ContentView.swift in Sources */,
 				7AA07A902A0417E800AE87B3 /* CapoPositionPickerView.swift in Sources */,
-				7A302E572A1FF27F005864F4 /* iJamGuitarModel.xcdatamodeld in Sources */,
 				7AA07A912A0417E800AE87B3 /* TopView.swift in Sources */,
 				7AA07A602A0416EC00AE87B3 /* Extensions.swift in Sources */,
 				7AA07A8B2A0417E800AE87B3 /* HeaderView.swift in Sources */,
-				7A302E502A1FF21B005864F4 /* iJamGuitarModel.swift in Sources */,
+				7A302E502A1FF21B005864F4 /* iJamModel.swift in Sources */,
 				7AA07A8C2A0417E800AE87B3 /* FretBoardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -620,14 +620,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		7A302E552A1FF27F005864F4 /* iJamGuitarModel.xcdatamodeld */ = {
+		7A302E7B2A2D0E62005864F4 /* iJamDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				7A302E562A1FF27F005864F4 /* Model.xcdatamodel */,
+				7A302E7C2A2D0E62005864F4 /* Model.xcdatamodel */,
 			);
-			currentVersion = 7A302E562A1FF27F005864F4 /* Model.xcdatamodel */;
-			name = iJamGuitarModel.xcdatamodeld;
-			path = Model/iJamGuitarModel.xcdatamodeld;
+			currentVersion = 7A302E7C2A2D0E62005864F4 /* Model.xcdatamodel */;
+			name = iJamDataModel.xcdatamodeld;
+			path = Model/iJamDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

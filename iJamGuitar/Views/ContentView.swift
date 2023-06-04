@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @StateObject var model = iJamGuitarModel()
+    @StateObject var model = iJamModel.shared
     var x = 0.0
     
     var body: some View {
@@ -33,12 +33,12 @@ struct ContentView: View {
             .position(centered)
         }
         .background(Color.black)
-        .environmentObject(model)  // inject iJamGuitarViewModel into environment
+        .environmentObject(model)  // inject iJamModel into environment
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+//    }
+//}
