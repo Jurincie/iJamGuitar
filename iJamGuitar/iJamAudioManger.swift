@@ -69,7 +69,7 @@ class iJamAudioManager {
     }
     
     func getZone(loc: CGPoint) -> Int{
-        // ZoneBreaks[n] is leftmost position of string[6-n]
+        // ZoneBreaks[n] is left-most position of string[6-n]
         var zone = 0
         if loc.x < zoneBreaks[0] {
             zone = 0
@@ -101,10 +101,16 @@ class iJamAudioManager {
         return zone
     }
     
+    ///   Description:
+    ///     if moving to left play string to right -
+    ///     if moving to right play string to left
+    /// - Parameters:
+    ///   - zone: the zone where drag resides
+    ///   - oldZone: the former Zone
+    /// - Returns: String number to play
     func stringNumberToPlay(zone: Int, oldZone: Int) -> Int {
         guard oldZone != -1  else { return 0 }
-        // if moving to left play string to right
-        // if moving to right play string to left
+        
         var stringNumber = (6 - (zone / 2))
         if oldZone < zone && zone != 0 {
             stringNumber += 1
@@ -112,6 +118,9 @@ class iJamAudioManager {
         return stringNumber
     }
     
+    ///   Description: This method determines if we are in a new zone -
+    ///   and if we should then play note on appropriate string
+    /// - Parameter location:- the current location of the drag in global co-ordinates
     func newDragLocation(_ location: CGPoint?) {
         guard let location =  location else { return }
         debugPrint("====> DragLocation: \(location)")
@@ -120,7 +129,6 @@ class iJamAudioManager {
         debugPrint("====> In New Zone: \(zone)")
         formerZone = zone
 
-        // should we play a note?
         let stringToPlay: Int = stringNumberToPlay(zone: zone, oldZone: formerZone)
         if shouldPickString(zone: zone, stringNumber: stringToPlay) {
             pickString(stringToPlay)
@@ -135,9 +143,13 @@ class iJamAudioManager {
         return answer
     }
     
+    /// Description: This method identifies the note to play on this string baded on capo position and fret -
+    ///  and then plays that string if the string is not muted
+    /// - Parameter stringToPlay: The String to be played
     func pickString(_ stringToPlay: Int) {
         let openNotes = model.activeTuning?.openNoteIndices?.components(separatedBy: "-")
         let fretPosition = model.fretIndexMap[6 - stringToPlay]
+        
         if fretPosition > kNoFret {
             if let noteIndices = openNotes, let thisStringsOpenIndex = Int(noteIndices[6 - stringToPlay]) {
                 let index               = fretPosition + thisStringsOpenIndex + model.capoPosition
@@ -173,5 +185,4 @@ class iJamAudioManager {
             }
         }
     }
-   
 }
