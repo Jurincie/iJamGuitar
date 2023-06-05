@@ -22,9 +22,9 @@ struct FramePreferenceKey: PreferenceKey {
 }
 
 class iJamAudioManager {
-    let context = PersistenceController.shared.container.viewContext
-    var model:iJamModel = iJamModel.shared
-    let kNoFret = -1
+    let context             = PersistenceController.shared.container.viewContext
+    var model: iJamModel    = iJamModel.shared
+    let kNoFret             = -1
     let kHalfStringWidth    = 5.0
     var formerZone          = -1
     var zoneBreaks:[Double] = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
@@ -44,7 +44,8 @@ class iJamAudioManager {
             try AVAudioSession.sharedInstance().setActive(true)
         } catch let error {
             model.showAudioPlayerErrorAlert = true
-            debugPrint(error)
+            debugPrint(error.localizedDescription)
+            fatalError()
         }
     }
 
@@ -60,6 +61,7 @@ class iJamAudioManager {
                 } catch InitializeErrors.AVAudioSessionError{ fatalError() }
                 catch {
                     model.showAudioPlayerErrorAlert = true
+                    debugPrint(error.localizedDescription)
                     fatalError()
                 }
             }
@@ -103,8 +105,11 @@ class iJamAudioManager {
         guard oldZone != -1  else { return 0 }
         // if moving to left play string to right
         // if moving to right play string to left
-        let stringNumber = (6 - (zone / 2))
-        return oldZone < zone && zone != 0 ? stringNumber + 1 : stringNumber
+        var stringNumber = (6 - (zone / 2))
+        if oldZone < zone && zone != 0 {
+            stringNumber += 1
+        }
+        return stringNumber
     }
     
     func newDragLocation(_ location: CGPoint?) {
@@ -113,14 +118,13 @@ class iJamAudioManager {
         let zone = getZone(loc: location)
         guard zone != formerZone else { return }
         debugPrint("====> In New Zone: \(zone)")
-        
+        formerZone = zone
+
         // should we play a note?
         let stringToPlay: Int = stringNumberToPlay(zone: zone, oldZone: formerZone)
         if shouldPickString(zone: zone, stringNumber: stringToPlay) {
             pickString(stringToPlay)
         }
-        
-        formerZone = zone
     }
     
     func shouldPickString(zone: Int, stringNumber: Int) -> Bool {
