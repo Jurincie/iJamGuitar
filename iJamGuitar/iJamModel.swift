@@ -10,6 +10,7 @@ import CoreData
 import AVFAudio
 
 class iJamModel: ObservableObject {
+    static let shared = iJamModel()
     let context = PersistenceController.shared.container.viewContext
     let kDefaultVolume = 5.0
     @Published var presentVolumeAlert = false
@@ -49,8 +50,6 @@ class iJamModel: ObservableObject {
             minimumFret = getinimumDisplayedFret()
         }
     }
-    
-    static let shared = iJamModel()
         
     ///  ONLY Call LoadDatatModelFromPLists to build our data model, on initial launch
     init() {
@@ -58,6 +57,7 @@ class iJamModel: ObservableObject {
         do {
             let appStates: [AppState] = try context.fetch(request)
             appState = appStates.first
+            
             if appState == nil {
                 loadDataModelFromPLists()
             }
@@ -145,13 +145,13 @@ class iJamModel: ObservableObject {
     /// activeTuning
     /// eachTunings activeChordGroup
     /// each chordGroups activeChord
-    func loadDataModelFromPLists() {
-        // populate our initial dataModel from Plists
-        let appState = AppState(context: context)
-
+    func loadDataModelFromPLists() { // populate our initial dataModel from Plists
+        appState = AppState(context: context)
+        guard appState != nil else { return }
+        
         // Standard Tuning
         let standardTuning = Tuning(context: context)
-        setupTuning(appState: appState,
+        setupTuning(appState: appState!,
                     tuning: standardTuning,
                     tuningName: "Standard",
                     openIndices: "4-9-14-19-23-28",
@@ -161,7 +161,7 @@ class iJamModel: ObservableObject {
         
         // Drop-D Tuning
         let dropDTuning = Tuning(context: context)
-        setupTuning(appState: appState,
+        setupTuning(appState: appState!,
                     tuning: dropDTuning,
                     tuningName: "Drop D",
                     openIndices: "2-9-14-19-23-28",
@@ -171,7 +171,7 @@ class iJamModel: ObservableObject {
         
         // Open D Tuning
         let openDTuning = Tuning(context: context)
-        setupTuning(appState: appState,
+        setupTuning(appState: appState!,
                     tuning: openDTuning,
                     tuningName: "Open D",
                     openIndices: "2-9-14-18-21-26",
@@ -180,11 +180,11 @@ class iJamModel: ObservableObject {
                     chordGroupsPath: "OpenDTuningChordGroups")
         
         // remainder of appState
-        appState.activeTuning = standardTuning
-        appState.capoPosition = 0
-        appState.isMuted = false
-        appState.volumeLevel = NSDecimalNumber(value: kDefaultVolume)
-        appState.activeTuning = standardTuning
+        appState?.activeTuning = standardTuning
+        appState?.capoPosition = 0
+        appState?.isMuted = false
+        appState?.volumeLevel = NSDecimalNumber(value: kDefaultVolume)
+        appState?.activeTuning = standardTuning
         
         try? context.save()
     }
@@ -213,7 +213,7 @@ class iJamModel: ObservableObject {
     /// - Parameters:
     ///   - dict: [String: String]  dictionary of [ChordGroup.name, chordNamesString] which are used to build returned chordGroupsSet
     ///   - parentTuning: the parentTuning to which this group belongs
-    /// - Returns: NSMutableSet of ChordGroups
+    /// - Returns: NSMutableSet of ChordGroups managed Objects
     func convertToSetOfChordGroups(dict: Dictionary<String,String>, parentTuning: Tuning) -> NSSet {
         let chordGroupsSet = NSMutableSet()
         var activeChordGroupIsSet = false
@@ -239,7 +239,7 @@ class iJamModel: ObservableObject {
     /// - Parameters:
     ///   - chordGroup: Optional ChordGroup
     ///   - parentTuning: Optional Tuning to which this group belongs
-    /// - Returns: NSMutableSet of this ChoreGroups Chords
+    /// - Returns: NSMutableSet of this ChoreGroups Chords managed Objects
     func getGroupsChords(chordGroup: ChordGroup?, parentTuning: Tuning?) -> NSMutableSet {
         let thisGroupsChords = NSMutableSet()
         var activeChordIsSet = false

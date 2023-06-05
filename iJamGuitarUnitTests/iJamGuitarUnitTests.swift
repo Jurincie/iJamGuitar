@@ -14,7 +14,7 @@ import AVFAudio
 final class iJamViewModelTests: XCTestCase {
     // Given
     let audioManager = iJamAudioManager()
-    let model = iJamModel()
+    let model = iJamModel.shared
     let tooBig = 20
 
     override func setUpWithError() throws {
