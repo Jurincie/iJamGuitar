@@ -58,6 +58,7 @@ struct ChordButtonsView: View {
                 Text(self.pick.title == kNoChordName ? "" : self.pick.title)
                     .foregroundColor(Color.white)
                     .font(.custom("Arial Rounded MT Bold", size: getFontSize(targetString: self.pick.title)))
+                    .fontWeight(.bold)
             }
             .cornerRadius(10.0)
             .rotationEffect(Angle(degrees: self.pick.title == kNoChordName ? 0 : isAnimated ? 360 : 0))

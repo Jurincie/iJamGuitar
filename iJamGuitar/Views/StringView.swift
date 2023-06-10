@@ -88,28 +88,47 @@ struct StringView: View {
                     if(self.fretBox.id == 0)
                     {
                         // show a white peg on zeroFret
-                        Image("Peg")
-                            .resizable()
-                    } else {
+                        CircleView(color: Color.white)   
+                    } else if model.fretIndexMap[6 - stringNumber] == fretBox.id {
                         // red ball on freted fretBox
-                        Image(model.fretIndexMap[6 - stringNumber] == fretBox.id ? "Redball" : "")
-                            .resizable()
+                        // yellow ball if not in the chord - meaning user tapped on different fret
+                        CircleView(color: fretIsFromChord() ? Color.red : Color.yellow)
                     }
                 }
                 // foreground
-                // show fretZero note names AND a possibly fretted fretBox
+                // show fretZero note names AND a (possibly) fretted fretBox
                 if self.fretBox.id == 0 {
                     Text(self.fretBox.title)
-                        .foregroundColor(Color.black)
                 } else {
                     self.fretBox.id == model.fretIndexMap[6 - stringNumber] ?
                     Text(self.fretBox.title)
-                        .foregroundColor(Color.white) :
-                    Text("")
-                        .font(.custom("Arial Rounded MT Bold", size: 18.0))
+                        .foregroundColor(Color.black) : Text("")
                 }
             }
         }
+        
+        func fretIsFromChord() -> Bool {
+            guard stringNumber < 6 && stringNumber >= 0 else { return true }
+            
+            if let fretMap = model.activeChord?.fretMap {
+                let index = fretMap.index(fretMap.startIndex, offsetBy: (6 - stringNumber))
+                let fretChar = fretMap[index]
+                let fretNumber = model.getFretFromChar(fretChar)
+                
+                return model.fretIndexMap[6 - stringNumber] == fretNumber ? true : false
+            }
+            
+            return true
+        }
+    }
+}
+
+struct CircleView: View {
+    var color: Color
+    var body: some View {
+        Circle()
+            .foregroundColor(color)
+            .padding(3)
     }
 }
 

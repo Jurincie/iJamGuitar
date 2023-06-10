@@ -21,9 +21,11 @@ struct HeaderView: View {
                 Spacer()
                 TuningPickerView()
                     .frame(alignment: .trailing)
+                    .border( .white, width: 3, cornerRadius: 7)
                 Spacer()
                 ChordGroupPickerView()
                     .frame(alignment: .leading)
+                    .border( .white, width: 3, cornerRadius: 7)
                 Spacer()
             }
         }

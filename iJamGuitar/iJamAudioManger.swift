@@ -71,6 +71,7 @@ class iJamAudioManager {
     func getZone(loc: CGPoint) -> Int{
         // ZoneBreaks[n] is left-most position of string[6-n]
         var zone = 0
+        
         if loc.x < zoneBreaks[0] {
             zone = 0
         } else if loc.x <= zoneBreaks[0] + kHalfStringWidth {
@@ -127,12 +128,12 @@ class iJamAudioManager {
         let zone = getZone(loc: location)
         guard zone != formerZone else { return }
         debugPrint("====> In New Zone: \(zone)")
-        formerZone = zone
 
         let stringToPlay: Int = stringNumberToPlay(zone: zone, oldZone: formerZone)
         if shouldPickString(zone: zone, stringNumber: stringToPlay) {
             pickString(stringToPlay)
         }
+        formerZone = zone
     }
     
     func shouldPickString(zone: Int, stringNumber: Int) -> Bool {

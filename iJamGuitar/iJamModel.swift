@@ -13,19 +13,19 @@ class iJamModel: ObservableObject {
     static let shared = iJamModel()
     let context = PersistenceController.shared.container.viewContext
     let kDefaultVolume = 5.0
-    @Published var presentVolumeAlert = false
+    @Published var showVolumeAlert = false
     @Published var showAudioPlayerInUseAlert = false
+    @Published var showAudioNotAvailableAlert: Bool = false
     @Published var showAudioPlayerErrorAlert = false
     @Published var appState: AppState?
     @Published var activeTuning: Tuning?
     @Published var capoPosition: Int = 0
-    @Published var showAudioNotAvailableAlert: Bool = false
     @Published var activeChordGroup: ChordGroup?
     @Published var isMuted = false
     @Published var volumeLevel = 5.0
     @Published var selectedChordIndex: Int = 0      // index into the availableChords for activeChordGroup
     @Published var savedVolumeLevel = 5.0           // allow us to return to level when volume set to zero via "mute"
-    @Published var fretIndexMap: [Int] = []         // fretIndexMap of current (Chord with changes) disregarding capo position
+    @Published var fretIndexMap: [Int] = []         // current fretIndexMap
     @Published var minimumFret: Int = 0             // lowest fret excluding open
     @Published var availableChords: [Chord] = []    // array of available chords for activeChordGroup
     @Published var activeTuningName: String = "" {
@@ -51,7 +51,7 @@ class iJamModel: ObservableObject {
         }
     }
         
-    ///  ONLY Call LoadDatatModelFromPLists to build our data model, on initial launch
+    ///  Warning: ONLY call LoadDatatModelFromPLists to build our data model, on INITIAL LAUNCH
     init() {
         let request = NSFetchRequest<AppState>(entityName: "AppState")
         do {

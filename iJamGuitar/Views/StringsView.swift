@@ -80,21 +80,21 @@ struct StringsView: View {
         .task({await playOpeningArpegio()})
         .contentShape(Rectangle())
         .gesture(drag)
-        .alert("Master Volume is OFF", isPresented: $model.presentVolumeAlert) {
-            Button("OK", role: .cancel) { model.presentVolumeAlert = false }
-            }
-            .alert("Another app is using the Audio Player", isPresented: $model.showAudioPlayerInUseAlert) {
-                Button("OK", role: .cancel) { model.showAudioPlayerInUseAlert = false }
-            }
-            .alert("Unknown Audio Player Error", isPresented: $model.showAudioPlayerErrorAlert) {
-                Button("OK", role: .cancel) { fatalError() }
-            }
+        .alert("Master Volume is OFF", isPresented: $model.showVolumeAlert) {
+            Button("OK", role: .cancel) { model.showVolumeAlert = false }
+        }
+        .alert("Another app is using the Audio Player", isPresented: $model.showAudioPlayerInUseAlert) {
+            Button("OK", role: .cancel) { model.showAudioPlayerInUseAlert = false }
+        }
+        .alert("Unknown Audio Player Error", isPresented: $model.showAudioPlayerErrorAlert) {
+            Button("OK", role: .cancel) { fatalError() }
+        }
     }
     
     func playOpeningArpegio() async {
         for string in 0...5 {
             audioManager.pickString(6 - string)
-            try? await Task.sleep(nanoseconds: 0_500_000_000)
+            try? await Task.sleep(nanoseconds: 0_200_000_000)
         }
     }
 

@@ -187,18 +187,18 @@
 			isa = PBXGroup;
 			children = (
 				7AA07A842A0417E800AE87B3 /* ContentView.swift */,
-				7AA07A782A0417E600AE87B3 /* BottomView.swift */,
-				7AA07A822A0417E800AE87B3 /* CapoPositionPickerView.swift */,
+				7AA07A832A0417E800AE87B3 /* TopView.swift */,
 				7AA07A802A0417E700AE87B3 /* ChordButtonsView.swift */,
+				7AA07A772A0417E600AE87B3 /* TuningPickerView.swift */,
 				7AA07A7C2A0417E600AE87B3 /* ChordGroupPickerView.swift */,
+				7AA07A822A0417E800AE87B3 /* CapoPositionPickerView.swift */,
+				7AA07A7F2A0417E700AE87B3 /* StringsAndFretsAreaView.swift */,
 				7AA07A7E2A0417E700AE87B3 /* FretBoardView.swift */,
 				7AA07A7A2A0417E600AE87B3 /* FretNumbersView.swift */,
 				7AA07A7D2A0417E700AE87B3 /* HeaderView.swift */,
-				7AA07A7F2A0417E700AE87B3 /* StringsAndFretsAreaView.swift */,
 				7AA07A812A0417E700AE87B3 /* StringsView.swift */,
 				7AA07A792A0417E600AE87B3 /* StringView.swift */,
-				7AA07A832A0417E800AE87B3 /* TopView.swift */,
-				7AA07A772A0417E600AE87B3 /* TuningPickerView.swift */,
+				7AA07A782A0417E600AE87B3 /* BottomView.swift */,
 				7AA07A7B2A0417E600AE87B3 /* VolumeView.swift */,
 			);
 			path = Views;
@@ -476,13 +476,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iJamGuitar/Preview Content\"";
 				DEVELOPMENT_TEAM = J5T6Z5N38H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iJamGuitar/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = iJamGuitar;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
@@ -492,7 +493,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.PixleyConsulting.iJamGuitar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -507,13 +508,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iJamGuitar/Preview Content\"";
 				DEVELOPMENT_TEAM = J5T6Z5N38H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iJamGuitar/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = iJamGuitar;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
@@ -523,7 +525,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.PixleyConsulting.iJamGuitar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
