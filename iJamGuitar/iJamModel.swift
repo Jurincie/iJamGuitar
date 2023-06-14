@@ -47,7 +47,7 @@ class iJamModel: ObservableObject {
         didSet {
             appState?.activeTuning?.activeChordGroup?.activeChord = activeChord
             fretIndexMap = getFretIndexMap(chord: activeChord)
-            minimumFret = getinimumDisplayedFret()
+            minimumFret = getMinimumDisplayedFret()
         }
     }
         

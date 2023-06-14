@@ -201,7 +201,7 @@ extension iJamModel
     /// This function calculates and returns the lowest displayed fret above the nut for the activeChord in the activeChordGroup in the activeTuning
     /// - Returns: Int of the lowest displayed fret above the nut
     /// Note: must be > the nut Int
-    func getinimumDisplayedFret() -> Int {
+    func getMinimumDisplayedFret() -> Int {
         guard let fretChars = activeChord?.fretMap else { return 0 }
         var highest = 0
         var thisFretVal = 0
