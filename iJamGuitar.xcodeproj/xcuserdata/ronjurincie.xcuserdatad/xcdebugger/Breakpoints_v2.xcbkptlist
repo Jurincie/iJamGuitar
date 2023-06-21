@@ -96,6 +96,36 @@
                   endingLineNumber = "151"
                   offsetFromSymbolStart = "120">
                </Location>
+               <Location
+                  uuid = "3674F0C5-1714-4C5B-A95B-4D4AA950E1AB - bf96801aee3bcb64"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iJamGuitar.iJamAudioManager.pickString(Swift.Int) -&gt; ()"
+                  moduleName = "iJamGuitar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ronjurincie/Desktop/iJamGuitar/iJamGuitar/iJamAudioManger.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "151"
+                  endingLineNumber = "151"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "3674F0C5-1714-4C5B-A95B-4D4AA950E1AB - bf96801aee3bcb64"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iJamGuitar.iJamAudioManager.pickString(Swift.Int) -&gt; ()"
+                  moduleName = "iJamGuitar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ronjurincie/Desktop/iJamGuitar/iJamGuitar/iJamAudioManger.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "151"
+                  endingLineNumber = "151"
+                  offsetFromSymbolStart = "276">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -343,8 +373,8 @@
             filePath = "iJamGuitar/iJamAudioManger.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
             landmarkName = "newDragLocation(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -385,6 +415,21 @@
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 () -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Button&lt;SwiftUI._ConditionalContent&lt;iJamGuitar.CircleView, iJamGuitar.CircleView&gt;&gt;, SwiftUI._ConditionalContent&lt;SwiftUI.Text, SwiftUI.Text&gt;)&gt; in iJamGuitar.StringView.FretBoxView.body.getter : some"
+                  moduleName = "iJamGuitar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ronjurincie/Desktop/iJamGuitar/iJamGuitar/Views/StringView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "74"
+                  endingLineNumber = "74"
+                  offsetFromSymbolStart = "112">
+               </Location>
+               <Location
+                  uuid = "CDF09435-48BA-437C-A55C-057C3127E668 - 98e30a86bbb81309"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Button&lt;Swift.Optional&lt;SwiftUI._ConditionalContent&lt;iJamGuitar.CircleView, iJamGuitar.CircleView&gt;&gt;&gt;, SwiftUI._ConditionalContent&lt;SwiftUI.Text, SwiftUI.Text&gt;)&gt; in iJamGuitar.StringView.FretBoxView.body.getter : some"
                   moduleName = "iJamGuitar"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ronjurincie/Desktop/iJamGuitar/iJamGuitar/Views/StringView.swift"

@@ -139,7 +139,7 @@ class iJamAudioManager {
     func shouldPickString(zone: Int, stringNumber: Int) -> Bool {
         var answer = false
         if zone % 2 == 0 && model.appState?.isMuted == false {
-            answer =  stringNumber > 0 && stringNumber < 7
+            answer = stringNumber > 0 && stringNumber < 7
         }
         return answer
     }

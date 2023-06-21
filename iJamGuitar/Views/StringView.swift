@@ -30,7 +30,7 @@ struct StringView: View {
         let openNotesString = (model.appState?.activeTuning?.stringNoteNames)
         if let openNotes:[String] = openNotesString?.components(separatedBy: ["-"]) {
             let fretBoxes:[FretBox] = getFretBoxArray(minFret: model.minimumFret, openStringNote: openNotes[6 - stringNumber])
-                        // 1x6 grid of Buttons with noteName in text on top of the possible image
+            // 1x6 grid of Buttons with noteName in text on top of the possible image
             // zero or one of the buttons may show the redBall image indicating string if fretted there
             VStack(spacing:0) {
                 FretBoxView(fretBox: fretBoxes[0], stringNumber:stringNumber)
@@ -93,6 +93,8 @@ struct StringView: View {
                         // red ball on freted fretBox
                         // yellow ball if not in the chord - meaning user tapped on different fret
                         CircleView(color: fretIsFromChord() ? Color.red : Color.yellow)
+                    } else {
+                        CircleView(color: Color.clear)
                     }
                 }
                 // foreground
