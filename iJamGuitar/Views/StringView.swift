@@ -87,24 +87,27 @@ struct StringView: View {
                 }){
                     if(self.fretBox.id == 0)
                     {
-                        // show a white peg on zeroFret
-                        CircleView(color: Color.white)   
+                        // show a white circle on zeroFret with black text
+                        CircleView(color: Color.teal, lineWidth: 1.0)
                     } else if model.fretIndexMap[6 - stringNumber] == fretBox.id {
                         // red ball on freted fretBox
                         // yellow ball if not in the chord - meaning user tapped on different fret
-                        CircleView(color: fretIsFromChord() ? Color.red : Color.yellow)
+                        CircleView(color: fretIsFromChord() ? Color.red : Color.yellow, lineWidth: 1.0)
                     } else {
-                        CircleView(color: Color.clear)
+                        CircleView()
                     }
                 }
                 // foreground
                 // show fretZero note names AND a (possibly) fretted fretBox
                 if self.fretBox.id == 0 {
                     Text(self.fretBox.title)
+                        .foregroundColor(Color.white)
+                        .font(.footnote)
                 } else {
-                    self.fretBox.id == model.fretIndexMap[6 - stringNumber] ?
-                    Text(self.fretBox.title)
-                        .foregroundColor(Color.black) : Text("")
+                    let text = self.fretBox.id == model.fretIndexMap[6 - stringNumber] ? self.fretBox.title : ""
+                    Text(text)
+                        .foregroundColor(Color.black)
+                        .font(.footnote)
                 }
             }
         }
@@ -114,10 +117,10 @@ struct StringView: View {
             
             if let fretMap = model.activeChord?.fretMap {
                 let index = fretMap.index(fretMap.startIndex, offsetBy: (6 - stringNumber))
-                let fretChar = fretMap[index]
-                let fretNumber = model.getFretFromChar(fretChar)
+                let chordFretNumber = model.getFretFromChar(fretMap[index])
+                let currentFretNumber = model.fretIndexMap[6 - stringNumber]
                 
-                return model.fretIndexMap[6 - stringNumber] == fretNumber ? true : false
+                return currentFretNumber == chordFretNumber ? true : false
             }
             
             return true
@@ -127,10 +130,21 @@ struct StringView: View {
 
 struct CircleView: View {
     var color: Color
+    var lineWidth: CGFloat
+    
+    init(color: Color = Color.clear, lineWidth: CGFloat = 0.0) {
+        self.color = color
+        self.lineWidth = lineWidth
+    }
+    
     var body: some View {
-        Circle()
-            .foregroundColor(color)
-            .padding(3)
+        ZStack {
+            Circle()
+                .foregroundColor(color)
+            Circle()
+                .strokeBorder(.black, lineWidth: lineWidth)
+        }
+        
     }
 }
 
