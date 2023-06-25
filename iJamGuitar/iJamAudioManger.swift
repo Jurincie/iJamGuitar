@@ -124,7 +124,7 @@ class iJamAudioManager {
     /// - Parameter location:- the current location of the drag in global co-ordinates
     func newDragLocation(_ location: CGPoint?) {
         guard let location =  location else { return }
-        debugPrint("====> DragLocation: \(location)")
+//        debugPrint("====> DragLocation: \(location)")
         let zone = getZone(loc: location)
         guard zone != formerZone else { return }
         debugPrint("====> In New Zone: \(zone)")
@@ -141,6 +141,7 @@ class iJamAudioManager {
         if zone % 2 == 0 && model.appState?.isMuted == false {
             answer = stringNumber > 0 && stringNumber < 7
         }
+        
         return answer
     }
     
@@ -174,6 +175,11 @@ class iJamAudioManager {
                 let thisAudioPlayer                 = try AVAudioPlayer(data:asset.data, fileTypeHint:"wav")
                 audioPlayerArray[6 - stringNumber]  = thisAudioPlayer
                 thisAudioPlayer.volume              = Float(volume) / 3.0
+                
+//                if vol.volume == 0.0 {
+//                    model.showVolumeAlert = true
+//                    return
+//                }
                 
                 thisAudioPlayer.prepareToPlay()
                 thisAudioPlayer.play()
