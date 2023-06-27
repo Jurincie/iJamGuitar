@@ -160,7 +160,7 @@ class iJamAudioManager {
 
                 playWaveFile(noteName:noteToPlayName,
                              stringNumber: stringToPlay,
-                             volume: volume / 10.0)
+                             volume: volume / 5.0)
             }
         }
     }
@@ -174,13 +174,7 @@ class iJamAudioManager {
             do {
                 let thisAudioPlayer                 = try AVAudioPlayer(data:asset.data, fileTypeHint:"wav")
                 audioPlayerArray[6 - stringNumber]  = thisAudioPlayer
-                thisAudioPlayer.volume              = Float(volume) / 3.0
-                
-//                if vol.volume == 0.0 {
-//                    model.showVolumeAlert = true
-//                    return
-//                }
-                
+                thisAudioPlayer.volume              = Float(volume) / 5.0
                 thisAudioPlayer.prepareToPlay()
                 thisAudioPlayer.play()
             }
