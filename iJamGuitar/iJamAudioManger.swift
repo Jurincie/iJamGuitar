@@ -145,7 +145,7 @@ class iJamAudioManager {
         return answer
     }
     
-    /// Description: This method identifies the note to play on this string baded on capo position and fret -
+    /// Description: This method identifies the note to play on this string based on capo position and fret -
     ///  and then plays that string if the string is not muted
     /// - Parameter stringToPlay: The String to be played
     func pickString(_ stringToPlay: Int) {
