@@ -14,9 +14,8 @@ struct ContentView: View {
     
     var body: some View {
         GeometryReader { geo in
-            let height      = geo.size.height
-            let width       = geo.size.width
-            let centered    = CGPoint(x:width / 2.0, y:height / 2.0)
+            let height = geo.size.height
+            let width = geo.size.width
             
             VStack(spacing: 0) {
                 HeaderView(width: width, height: height * 0.10 )
@@ -30,15 +29,15 @@ struct ContentView: View {
             }
             .cornerRadius(16.0)
             .frame(width:width, height:height)
-            .position(centered)
+            .position(CGPoint(x: width / 2.0, y: height / 2.0))
         }
         .background(Color.black)
         .environmentObject(model)  // inject iJamModel into environment
     }
 }
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-//    }
-//}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}

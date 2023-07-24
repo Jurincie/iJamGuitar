@@ -49,33 +49,35 @@ struct StringsView: View {
         HStack() {
             SixSpacerHStack()
             HStack(spacing:0) {
-                StringView(height:height, stringNumber: 6, fretNumber: model.fretIndexMap[0]) .readFrame { newFrame in
-                    audioManager.zoneBreaks[0] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
+                Group {
+                    StringView(height:height, stringNumber: 6, fretNumber: model.fretIndexMap[0]) .readFrame { newFrame in
+                        audioManager.zoneBreaks[0] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
+                    }
+                    Spacer()
+                    StringView(height:height, stringNumber: 5, fretNumber: model.fretIndexMap[1]) .readFrame { newFrame in
+                        audioManager.zoneBreaks[1] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
+                    }
+                    Spacer()
+                    StringView(height:height, stringNumber: 4, fretNumber: model.fretIndexMap[2]) .readFrame { newFrame in
+                        audioManager.zoneBreaks[2] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
+                    }
+                    Spacer()
                 }
-                Spacer()
-                StringView(height:height, stringNumber: 5, fretNumber: model.fretIndexMap[1]) .readFrame { newFrame in
-                    audioManager.zoneBreaks[1] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
+                Group {
+                    StringView(height:height, stringNumber: 3, fretNumber: model.fretIndexMap[3]) .readFrame { newFrame in
+                        audioManager.zoneBreaks[3] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
+                    }
+                    Spacer()
+                    StringView(height:height, stringNumber: 2, fretNumber: model.fretIndexMap[4]) .readFrame { newFrame in
+                        audioManager.zoneBreaks[4] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
+                    }
+                    Spacer()
+                    StringView(height:height, stringNumber: 1, fretNumber: model.fretIndexMap[5]).readFrame { newFrame in
+                        audioManager.zoneBreaks[5] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
+                    }
+                    SixSpacerHStack()
                 }
-                Spacer()
-                StringView(height:height, stringNumber: 4, fretNumber: model.fretIndexMap[2]) .readFrame { newFrame in
-                    audioManager.zoneBreaks[2] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
-                }
-                Spacer()
-                StringView(height:height, stringNumber: 3, fretNumber: model.fretIndexMap[3]) .readFrame { newFrame in
-                    audioManager.zoneBreaks[3] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
-                }
-                Spacer()
-                StringView(height:height, stringNumber: 2, fretNumber: model.fretIndexMap[4]) .readFrame { newFrame in
-                    audioManager.zoneBreaks[4] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
-                }
-                Spacer()
             }
-            HStack() {
-                StringView(height:height, stringNumber: 1, fretNumber: model.fretIndexMap[5]).readFrame { newFrame in
-                    audioManager.zoneBreaks[5] = ((newFrame.maxX + newFrame.minX) / 2.0) - kHalfStringWidh
-                }
-            }
-            SixSpacerHStack()
         }
         .task({await playOpeningArpegio()})
         .contentShape(Rectangle())
